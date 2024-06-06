@@ -3,9 +3,12 @@ import './App.css'
 import Grid from "./Grid"
 
 function App() {
-  const [count, setCount] = useState(0)
   const weeks = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
-  const years = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75]
+  const years = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]
+
+  const handleInput = () => {
+    
+  }
 
   return (
     <>
@@ -25,6 +28,14 @@ function App() {
           
         </div>
       </div>
+      <button 
+        className="top-left-button" 
+        onclick={handleInput()}>
+        Input
+      </button>
+      <button className="right-button">
+        Days
+      </button>
     </>
   )
 }
