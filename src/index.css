@@ -14,7 +14,7 @@ body {
   display: flex;
   place-items: center;
   min-width: 720px;
-  min-height: 100vh;
   /* background-color: rgb(182, 174, 174); */
-  width: 100vw;
+  /* width: 100vw; Bars caused by this*/ 
+  /* min-height: 100vh; Bars caused by this*/
 }
