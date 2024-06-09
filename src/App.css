@@ -133,13 +133,35 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .label {
   min-width: 100px;
   text-align: center;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.input-container {
+  display: flex;
+  min-width: 180px;
 }
 
 .input {
   margin-right: 10px;
+  width: 80px;
+  height: 86px;
+  border-radius: 10px;
+  border: 1px solid grey;
+  text-align: center;
+  padding: 7px 0 7px 0;
+  font-size: 40px;
+}
+
+.year {
+  width: 100px;
+}
+.input::placeholder{
+  font-size: 40px;
 }
