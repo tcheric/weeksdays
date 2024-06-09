@@ -10,7 +10,6 @@ function App() {
   const [showModal, setShowModal] = useState(false)
 
   const toggleModal = () => {
-    console.log("toggle")
     setShowModal(!showModal)
   }
 

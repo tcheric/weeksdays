@@ -159,9 +159,21 @@ li {
   font-size: 40px;
 }
 
+.input:focus {
+  background-color: rgb(248, 248, 248);
+}
+
+.invalid:focus{
+  color: rgb(255, 106, 80);
+}
+
 .year {
   width: 100px;
 }
 .input::placeholder{
   font-size: 40px;
+}
+
+.dob-form .enter{
+  margin-top: 16px;
 }
