@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { FaTimes } from "react-icons/fa";
 
 const Modal = ({ open, onClose }) => {
 
@@ -22,16 +23,16 @@ const Modal = ({ open, onClose }) => {
   const isCharNumber = (c) => {
     return c >= '0' && c <= '9';
   }
-  
-  const invalidReturn = () => {
-    setInvalid(true)
-    return 
-  }
 
   return (
     <>
       <div className="modal-bg" onClick={onClose}>
         <div className="popup" onClick={(e)=> {e.stopPropagation()}}>
+          <button 
+            className="modal-close" 
+            onClick={onClose}>
+            {<FaTimes />}
+          </button>
           <form className="dob-form" onSubmit={onSubmit}>
             <label className="label">Enter your birth date:</label>
             <div className="input-container">
