@@ -4,7 +4,7 @@ import Grid from "./Grid"
 import Modal from "./Modal"
 
 function App() {
-  const weeks = [1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+  const weeks = [1,5,10,15,20,25,30,35,40,45,50]
   const years = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]
 
   const [showModal, setShowModal] = useState(false)
@@ -22,7 +22,6 @@ function App() {
   }
 
   const onAdd = ({date, month, year}) => {
-    console.log(date, month, year)
     // set dobInputted flag
     setDobInputted(true)
 
@@ -32,7 +31,9 @@ function App() {
     console.log(weekAge)
 
     // Set dob and Age (weeks) in LS
-  
+    const dobStr= date + month + year
+    localStorage.setItem("dob", dobStr)
+    localStorage.setItem("age", weekAge)
   }
 
   return (
