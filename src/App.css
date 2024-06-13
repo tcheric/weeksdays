@@ -126,6 +126,21 @@ li {
   cursor: default;
 }
 
+.modal-close {
+  font-size: 18px;
+  position: absolute;
+  right: 0;
+  margin: 4px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: rgb(255, 106, 80);
+}
+
 /* INPUT FORM */
 .dob-form {
   height: 100%;
@@ -178,17 +193,6 @@ li {
   margin-top: 16px;
 }
 
-.modal-close {
-  font-size: 18px;
-  position: absolute;
-  right: 0;
-  margin: 4px;
-  padding: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
-}
-
-.modal-close:hover {
-  color: rgb(255, 106, 80);
-}
+.sub-invalid {
+  color: red;
+} 

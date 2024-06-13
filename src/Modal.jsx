@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { FaTimes } from "react-icons/fa";
 
-const Modal = ({ open, onClose }) => {
+const Modal = ({ onAdd, open, onClose }) => {
 
   if (!open) return null
 
@@ -9,15 +9,19 @@ const Modal = ({ open, onClose }) => {
   const [month, setmonth] = useState("")
   const [year, setyear] = useState("")
   const [invalid, setInvalid] = useState(false)
+  const [submitInvalid, setSubmitInvalid] = useState(false)
 
   const onSubmit = (e) => {
     e.preventDefault()
-    if (!dob) {
-      alert('Please enter a date')
+
+    if (date.length != 2 || month.length != 2 || year.length != 4) {
+      setSubmitInvalid(true)
       return
     }
-    onAdd({ dob }) //this is an addTask object
-    setDob('')
+
+    if (!invalid) {
+      onAdd({ date, month, year })
+    }
   }
 
   const isCharNumber = (c) => {
@@ -44,6 +48,7 @@ const Modal = ({ open, onClose }) => {
                 value = {date} 
                 onChange={(e) => {
                   setInvalid(false)
+                  setSubmitInvalid(false)
                   let value = e.target.value
                   if ((Number(value) > 31) 
                       || (value == "00")
@@ -63,6 +68,7 @@ const Modal = ({ open, onClose }) => {
                 value = {month} 
                 onChange={(e) => {
                   setInvalid(false)
+                  setSubmitInvalid(false)
                   let value = e.target.value
                   if (value == "00" 
                       || Number(value) > 12
@@ -85,6 +91,7 @@ const Modal = ({ open, onClose }) => {
                   let age = new Date().getFullYear() - Number(value)
                   if (value.length > 4) return
                   setInvalid(false)
+                  setSubmitInvalid(false)
                   if (value.length > 0 && !isCharNumber(value.slice(-1))
                       || value.length == 4 && (age > 80 || age < 0)) {
                     setInvalid(true)
@@ -93,7 +100,7 @@ const Modal = ({ open, onClose }) => {
                 }}
               />
             </div>
-            <button className="enter">Enter</button>
+            <button className={`enter ${submitInvalid ? 'sub-invalid': ''}`}>Enter</button>
           </form>
         </div>
       </div>
