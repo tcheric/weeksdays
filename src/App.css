@@ -73,12 +73,12 @@ li {
   width: 22px;
   height: 100%;
   min-height: 60px;
-  margin-top: 4px;
+  margin-top: -3px;
 }
 
 .y-axis span {
-  margin-top: 32px;
-  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-bottom: 32px;
   float: left;
   font-size: 12px;
   width: 18px;

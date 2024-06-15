@@ -6,11 +6,11 @@ import Modal from "./Modal"
 function App() {
   // Hardcoded data
   const weeks = [1,5,10,15,20,25,30,35,40,45,50]
-  const years = [5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80]
+  const years = [0, 5,10,15,20,25,30,35,40,45,50,55,60,65,70,75]
 
   // UseState
   const [showModal, setShowModal] = useState(false)
-  
+
   const [dob, setDob] = useState(() => {
     const dobLS = localStorage.getItem("dob")
     return (dobLS === null) ? null : dobLS // this is a string
