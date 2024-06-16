@@ -11,12 +11,31 @@ const Grid = ({ green }) => {
 
   const [mapArr, setmapArr] = useState(()=>{
     let arr =  new Array(4160-green)
-    // let arr =  new Array(1211)
     for (let i = 0; i < arr.length; i++) {
       arr[i] = i
     }
     return arr
   })
+  
+useEffect(() => {
+  let arr =  new Array(green)
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = i
+  }
+  setmapArrGreen(arr)
+
+  let arr2 =  new Array(4160-green)
+  for (let i = 0; i < arr2.length; i++) {
+    arr2[i] = i
+  }
+  setmapArr(arr2)
+
+  return () => {
+    arr = null
+    arr2 = null
+  }
+}, [green])
+
   
   return (
     <div className="grid">

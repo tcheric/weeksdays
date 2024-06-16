@@ -44,7 +44,6 @@ function App() {
 
   const onAdd = ({date, month, year}) => {
     // set dobInputted flag
-    setDob(true)
 
     // Calculate age
     let dobJSObj = new Date(Number(year), Number(month-1), Number(date))
@@ -55,6 +54,8 @@ function App() {
     const dobStr= date + month + year
     localStorage.setItem("dob", dobStr)
     localStorage.setItem("age", weekAge)
+    setDob(dobStr)
+    setAgeWks(weekAge)
     setShowModal(false)
   }
 
