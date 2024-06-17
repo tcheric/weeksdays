@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 const Grid = ({ green }) => {
 
   const [mapArrGreen, setmapArrGreen] = useState(()=>{
@@ -17,6 +17,7 @@ const Grid = ({ green }) => {
     return arr
   })
   
+// Use effect to recalculate grid
 useEffect(() => {
   let arr =  new Array(green)
   for (let i = 0; i < arr.length; i++) {
