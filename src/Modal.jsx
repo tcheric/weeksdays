@@ -37,7 +37,11 @@ const Modal = ({ onAdd, open, onClose }) => {
             onClick={onClose}>
             {<FaTimes />}
           </button>
-          <form className="dob-form" onSubmit={onSubmit}>
+          <form 
+            className="dob-form" 
+            onSubmit={onSubmit}
+            autocomplete="off"
+          >
             <label className="label">Enter your birth date:</label>
             <div className="input-container">
               <input 
