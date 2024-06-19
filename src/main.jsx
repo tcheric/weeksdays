@@ -14,6 +14,10 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
   },
+  {
+    path: "week/:weekNum",
+    element: <WeekPage />
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
