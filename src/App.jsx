@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import './App.css'
-import Grid from "./Grid"
-import Modal from "./Modal"
+import './css/App.css'
+import Grid from "./components/Grid"
+import Modal from "./components/Modal"
+import { useNavigate } from "react-router-dom";
 
 function App() {
   // Hardcoded data
@@ -32,6 +33,9 @@ function App() {
   }
   ,[dob])
 
+  // useNavigate
+  const navigate = useNavigate();
+  
   // Open/close modal
   const toggleModal = () => {
     setShowModal(!showModal)
@@ -81,7 +85,10 @@ function App() {
         onClick={toggleModal}>
         Input
       </button>
-      <button className="right-button">
+      <button 
+        className="right-button"
+        onClick={() => {navigate(`/week/${ageWks}`)}}
+      >
         Days
       </button>
       <Modal
