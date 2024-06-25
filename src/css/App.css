@@ -201,3 +201,35 @@ li {
 .sub-invalid {
   color: red;
 } 
+
+/* WEEK PAGE */
+.wk-ctnr {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.outer-goal-ctnr {
+  width: 80%;
+  min-width: 700px;
+  min-height: 400px;
+  background-color: blueviolet;
+}
+
+.wk-ctnr h1 {
+  text-align: center;
+  font-size: 50px;
+  font-weight: normal;
+}
+
+.day-axis {
+  height: 20px;
+  background-color: beige;
+}
+
+.goal-ctnr {
+  background-color: rgb(0, 132, 255);
+  height: 100%;
+}
