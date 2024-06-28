@@ -213,7 +213,7 @@ li {
 
 .outer-goal-ctnr {
   width: 70%;
-  min-width: 700px;
+  min-width: 800px;
   min-height: 400px;
   background-color: rgb(236, 236, 236);
 }
@@ -240,14 +240,15 @@ li {
 }
 
 .day-axis span  {
- margin-inline: 40px;
- font-size: 14px;
+  margin-inline: 36px;
+  font-size: 14px;
+  width: 26px;
+  text-align: center;
 }
 
 .goal {
   height: 50px;
   display: flex;
-  /* align-items: center; */
 }
 
 .goal-name {
@@ -260,9 +261,20 @@ li {
 
 .dots-lines {
   width: 82%;
-  /* background-color: #fff; */
+  /* background-color: red; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .dash {
-  font-size: 20px;
+  margin-inline: 36px;
+  font-size: 26px;
+  /* flex-shrink: 0 */
+}
+
+.dot {
+  margin-inline: 36px;
+  font-size: 26px;
+  /* flex-shrink: 0 */
 }

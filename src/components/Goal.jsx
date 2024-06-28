@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { FaDotCircle } from "react-icons/fa";
-import { GoDash, GoCircle } from "react-icons/go";
+import { GoDash, GoSquareFill } from "react-icons/go";
 
 const Goal = ({ name }) => {
   // 1 = dot, 0 = dash
@@ -10,7 +10,7 @@ const Goal = ({ name }) => {
     <span className="goal-name">name</span>
     <div className="dots-lines">
         {dotArr.map(i => {
-          if (i == 1) return <GoCircle className="dot" key={crypto.randomUUID()}/>
+          if (i == 1) return <GoSquareFill className="dot" key={crypto.randomUUID()}/>
           return <GoDash className="dash" key={crypto.randomUUID()}/>
         })}
     </div>
