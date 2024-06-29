@@ -7,7 +7,7 @@ const Goal = ({ name }) => {
   const dotArr = [1,1,1,0,1,1,1]
   return (
   <div className="goal">
-    <span className="goal-name">name</span>
+    <span className="goal-name">{name}</span>
     <div className="dots-lines">
         {dotArr.map(i => {
           if (i == 1) return <GoSquareFill className="dot" key={crypto.randomUUID()}/>

@@ -6,7 +6,7 @@ const WeekPage = ({}) => {
   // Hardcoded data
   const days = ["M","T","W","T","F","S","S"]
 
-  const [goals, setgoals] = useState(["Knitting"])
+  const [goals, setgoals] = useState(["Kubernetes", "Leetcode"])
 
   const params = useParams();
   
