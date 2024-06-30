@@ -26,6 +26,13 @@ function App() {
   useEffect(() => {
     if (dob) {
       console.log("dob inputted")
+      // Re-calc age and update ageWks usestate and LS
+      let date = dob.slice(0,2)
+      let month = dob.slice(2,4)
+      let year = dob.slice(4,8)
+      let weekAge = calcAgeWks(year, month, date)
+      localStorage.setItem("age", weekAge)
+      setAgeWks(weekAge)
     } else {
       console.log("Nah not inputted")
       setShowModal(true)
@@ -42,16 +49,14 @@ function App() {
   }
 
   // Helper func for below
-  const calcAgeWks = ( dateObj ) => {
-    return Math.round((new Date() - dateObj) / (7 * 24 * 60 * 60 * 1000));
+  const calcAgeWks = ( year, month, date ) => {
+    let dobObj = new Date(Number(year), Number(month-1), Number(date))
+    return Math.round((new Date() - dobObj) / (7 * 24 * 60 * 60 * 1000));
   }
 
   const onAdd = ({date, month, year}) => {
-    // set dobInputted flag
-
     // Calculate age
-    let dobJSObj = new Date(Number(year), Number(month-1), Number(date))
-    const weekAge = calcAgeWks(dobJSObj)
+    const weekAge = calcAgeWks(year, month, date)
     console.log(weekAge)
 
     // Set dob and Age (weeks) in LS
@@ -87,8 +92,7 @@ function App() {
       </button>
       <button 
         className="right-button"
-        onClick={() => {navigate(`/week/${ageWks}`)}}
-      >
+        onClick={() => {navigate(`/week/${ageWks}`)}}>
         Days
       </button>
       <Modal
