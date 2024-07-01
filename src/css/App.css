@@ -288,3 +288,43 @@ li {
   top: 50vh;
   left: 20px;
 }
+
+.ag-btn-ctnr {
+  width: 15%;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.input-showing {
+}
+
+.add-goal-button {
+  height: 30px;
+  width: 30px;
+  float: right;
+  border: 1px solid rgb(215, 215, 215);
+  background-color: white;
+  color: rgb(170, 170, 170);
+  font-weight: normal;
+  font-size: 20px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.ag-input {
+  height: 28px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 1px solid rgb(215, 215, 215);
+  font-size: 18px;
+  padding-inline: 3px;
+}
+
+.ag-input::placeholder {
+  /* text-align: right; */
+  color: rgb(200, 200, 200);
+  /* padding-inline: 10px; */
+}
