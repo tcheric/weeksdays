@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
+import { GoCheck } from "react-icons/go";
 import Goal from "./Goal"
 
 const WeekPage = ({}) => {
@@ -31,24 +32,33 @@ const WeekPage = ({}) => {
           {goals.map(i => {
             return <Goal name={i} key={crypto.randomUUID()}></Goal>
           })}
-          <div className={`ag-btn-ctnr ${showInput ? 'input-showing': ''}`}>
-            {!showInput && <button 
-              className="add-goal-button"
-              onClick={() => setShowInput(true)}>
-              +
-            </button>}
-            {showInput && <input 
-              className="ag-input"
-              type='text' 
-              placeholder={"Add Goal"}
-              value = {newGoal} 
-              onChange={(e) => setNewGoal(e.target.value)}
-            />}
-            {showInput && <button 
-              className="add-goal-button"
-              onClick={() => setShowInput(true)}>
-              +
-            </button>}
+          <div className="ag-ctnr">
+            <div className="ag-btn-ctnr">
+              {!showInput && <button 
+                className="add-goal-button plus"
+                onClick={() => setShowInput(true)}>
+                +
+              </button>}
+            </div>
+            {showInput && <div className="ag-input-ctnr">
+              <input 
+                className="ag-input"
+                type='text' 
+                placeholder={"Add Goal"}
+                value = {newGoal} 
+                onChange={(e) => setNewGoal(e.target.value)}
+              />
+              <button 
+                className="add-goal-button"
+                onClick={() => {setShowInput(false)}}>
+                X
+              </button>
+              <button 
+                className="add-goal-button"
+                onClick={() => {return}}>
+                <GoCheck className="tick-button"/>
+              </button>
+            </div>}
           </div>
         </div>
       </div>

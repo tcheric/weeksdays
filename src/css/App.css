@@ -289,12 +289,18 @@ li {
   left: 20px;
 }
 
+.ag-ctnr {
+  width: 100%;
+  display: flex;
+  margin-top: 8px;
+}
+
 .ag-btn-ctnr {
   width: 15%;
-  margin-top: 8px;
   display: flex;
   align-items: center;
   justify-content: end;
+  margin-right: 3%;
 }
 
 .input-showing {
@@ -308,23 +314,35 @@ li {
   background-color: white;
   color: rgb(170, 170, 170);
   font-weight: normal;
-  font-size: 20px;
+  font-size: 17px;
+  text-align: center;
   cursor: pointer;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 .ag-input {
   height: 28px;
-  width: 100%;
+  width: auto;
   padding: 0;
   margin: 0;
   border: 1px solid rgb(215, 215, 215);
   font-size: 18px;
-  padding-inline: 3px;
+  padding-inline: 5px;
 }
 
 .ag-input::placeholder {
-  /* text-align: right; */
   color: rgb(200, 200, 200);
-  /* padding-inline: 10px; */
+}
+
+.tick-button {
+  font-size: 21px;
+  flex-shrink: 0;
+}
+
+.plus {
+  font-size: 22px;
 }

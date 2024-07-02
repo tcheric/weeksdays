@@ -18,10 +18,6 @@ const router = createBrowserRouter([
   {
     path: "week/:weekNum",
     element: <WeekPage />,
-    // loader: ({ params }) => {
-    //   console.log(params)
-    //   return null
-    // },
   },
 ]);
 
