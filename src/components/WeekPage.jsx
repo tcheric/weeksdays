@@ -14,8 +14,30 @@ const WeekPage = ({}) => {
   const params = useParams()
   const navigate = useNavigate();
 
+  const getWeeklyData = () => {
+    // Goal: "K8s" Week: [1211, 1212, 1213] Daily: "0101011"
+    
+    // If key not in LS
+    
+    // If key in LS
+    const goalArrStr = localStorage.getItem("goals")
+    const goalArrObj = JSON.parse(goalArrStr)
+
+    return goalArrObj
+  }
+
+  // Toggle specified day of specified  goal
+  const setWeeklyData = () => {
+
+  }
+
   const addGoal = () => {
     // TODO
+    setgoals([...goals, newGoal])
+    setNewGoal("")
+    setShowInput(false)
+    // Update LS
+    setWeeklyData(goal, day)
   }
 
   return (
@@ -55,7 +77,7 @@ const WeekPage = ({}) => {
               </button>
               <button 
                 className="add-goal-button"
-                onClick={() => {return}}>
+                onClick={addGoal}>
                 <GoCheck className="tick-button"/>
               </button>
             </div>}
