@@ -310,7 +310,7 @@ li {
   height: 30px;
   width: 30px;
   float: right;
-  border: 1px solid rgb(215, 215, 215);
+  border: 1px solid rgb(200, 200, 200);
   background-color: white;
   color: rgb(170, 170, 170);
   font-weight: normal;
@@ -324,11 +324,17 @@ li {
   padding: 0;
 }
 
+.add-goal-button:active {
+  background-color: rgb(230, 230, 230);
+  border-color:rgb(230, 230, 230);
+  color: white;
+}
+
 .ag-input-ctnr {
   /* width: 200px; */
 }
 
-.ag-input {
+#ag-input {
   height: 28px;
   width: 160px;
   padding: 0;
@@ -339,8 +345,13 @@ li {
   color: rgb(10, 10, 10);
 }
 
-.ag-input::placeholder {
+#ag-input::placeholder {
   color: rgb(200, 200, 200);
+}
+
+#ag-input:focus {
+  outline-color: rgb(155, 155, 155);
+  background-color: rgb(252, 252, 252);
 }
 
 .tick-button {

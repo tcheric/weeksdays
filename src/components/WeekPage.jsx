@@ -7,37 +7,65 @@ const WeekPage = ({}) => {
   // Hardcoded data
   const days = ["M","T","W","T","F","S","S"]
 
+  // UseState
   const [goals, setgoals] = useState(["Kubernetes", "Leetcode"])
   const [showInput, setShowInput] = useState(false)
   const [newGoal, setNewGoal] = useState("")
+  
+  // UseEffect
+  useEffect(() => {
+    if (showInput) {
+      document.getElementById("ag-input").focus()
+    }
+  }, [showInput]);
 
+  // Random Hooks
   const params = useParams()
   const navigate = useNavigate();
 
-  const getWeeklyData = () => {
-    // Goal: "K8s" Week: [1211, 1212, 1213] Daily: "0101011"
-    
-    // If key not in LS
-    
-    // If key in LS
-    const goalArrStr = localStorage.getItem("goals")
-    const goalArrObj = JSON.parse(goalArrStr)
 
+  const getWeeklyData = () => {
+    // Goals: "K8s" Weeks: [1211, 1212, 1213] Daily: "0101011"
+    const goalArrStr = localStorage.getItem("goals")
+
+  if (goalArrStr === null) {
+    return null
+  } else { // If key in LS
+    const goalArrObj = JSON.parse(goalArrStr)
     return goalArrObj
+    }
   }
 
   // Toggle specified day of specified  goal
-  const setWeeklyData = () => {
+  const toggleGoalData = () => {
 
+  }
+
+  const createNewGoal = (goalName) => {
+    // First goal ever
+    if (getWeeklyData() == null) {
+      const currAge = localStorage.getItem("age")
+
+      const newGoalObj = {
+        goal: goalName, weeks: {[currAge]: "0000000"}
+      }
+      
+      console.log(newGoalObj)
+      // localStorage.setItem("goals", JSON.stringify(newGoalObj))
+    } else {
+      return
+    }
   }
 
   const addGoal = () => {
     // TODO
-    setgoals([...goals, newGoal])
-    setNewGoal("")
+    setgoals([...goals, newGoal]) //Remove l8r
     setShowInput(false)
     // Update LS
-    setWeeklyData(goal, day)
+    createNewGoal(newGoal)
+    
+    // Reset input
+    setNewGoal("")
   }
 
   return (
@@ -58,14 +86,15 @@ const WeekPage = ({}) => {
             <div className="ag-btn-ctnr">
               {!showInput && <button 
                 className="add-goal-button plus"
-                onClick={() => setShowInput(true)}>
+                onClick={() => {setShowInput(true)}}>
                 +
               </button>}
             </div>
             {showInput && <div className="ag-input-ctnr">
               <input 
-                className="ag-input"
+                id={"ag-input"}
                 type='text' 
+                spellCheck="false"
                 placeholder={"Add Goal"}
                 value = {newGoal} 
                 onChange={(e) => setNewGoal(e.target.value)}
