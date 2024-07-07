@@ -28,11 +28,11 @@ const WeekPage = ({}) => {
     // Goals: "K8s" Weeks: [1211, 1212, 1213] Daily: "0101011"
     const goalArrStr = localStorage.getItem("goals")
 
-  if (goalArrStr === null) {
-    return null
-  } else { // If key in LS
-    const goalArrObj = JSON.parse(goalArrStr)
-    return goalArrObj
+    if (goalArrStr === null) {
+      return null
+    } else { // If key in LS
+      const goalArrObj = JSON.parse(goalArrStr)
+      return goalArrObj
     }
   }
 
@@ -42,18 +42,27 @@ const WeekPage = ({}) => {
   }
 
   const createNewGoal = (goalName) => {
-    // First goal ever
-    if (getWeeklyData() == null) {
-      const currAge = localStorage.getItem("age")
-
+    const prevWeeklyData = getWeeklyData()
+    const currAge = localStorage.getItem("age")
+      // First goal ever - create goals obj
+    if (prevWeeklyData == null) {
+      // Object with goalname as keys, values are each objects 
       const newGoalObj = {
-        goal: goalName, weeks: {[currAge]: "0000000"}
-      }
-      
-      console.log(newGoalObj)
-      // localStorage.setItem("goals", JSON.stringify(newGoalObj))
+        [goalName]: {weeks: {[currAge]: "0000000"}, active: "no"}
+      }       
+      localStorage.setItem("goals", JSON.stringify(newGoalObj))
     } else {
-      return
+      let newWeeklyData = prevWeeklyData
+      if (goalName in prevWeeklyData) { // goals obj exists + goalName existed
+        if (prevWeeklyData[goalName].active == "no") {
+          newWeeklyData[goalName].active = "yes"
+          // newWeeklyData[goalName].weeks[currAge] = "0000001" how to change week/day data
+          localStorage.setItem("goals", JSON.stringify(newWeeklyData))
+        }
+      } else { // goals obj existed + no goalName key
+        newWeeklyData[goalName] = {weeks: {[currAge]: "0000000"}, active: "no"}
+        localStorage.setItem("goals", JSON.stringify(newWeeklyData))
+      }
     }
   }
 
