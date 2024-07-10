@@ -7,24 +7,14 @@ const Goal = ({ name }) => {
   // 1 = dot, 0 = dash
   const dotArr = [1,1,1,0,1,1,1]
 
-  // const [showDots, setShowDots] = useState(false)
-  // useEffect(() => {
-  //   document.getElementById(name).addEventListener("mouseover", (event) => {setShowDots(!showDots)});
-  
-  //   return () => {
-  //   }
-  // }, [])
-  
-  
-
-
-
   return (
   <div className="goal">
-    <div className="goal-name" id={name} onClick={()=>{setShowDots(!showDots)}}>
+    <div className="goal-name">
       <div className="inner-gn-wrapper">
         {name}
-        {/* {name}{showDots && <RxDotsVertical className="goal-name-dots"/>} */}
+        <div className="dot-space">
+          <RxDotsVertical className="goal-name-dots"/>
+        </div>
       </div>
     </div>
     <div className="dots-lines">
