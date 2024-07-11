@@ -2,14 +2,25 @@ import { useState, useEffect } from 'react'
 import { FaDotCircle } from "react-icons/fa";
 import { GoDash, GoSquareFill } from "react-icons/go";
 import { RxDotsVertical } from "react-icons/rx";
+import GoalModal from "./GoalModal"
 
 const Goal = ({ name }) => {
   // 1 = dot, 0 = dash
   const dotArr = [1,1,1,0,1,1,1]
+  const [showModal, setShowModal] = useState(false)
+
+  const finishGoal = ( result ) => {
+    if (result == "Success") {
+
+    } else if (result == "Failure") {
+
+    }
+    return
+  }
 
   return (
   <div className="goal">
-    <div className="goal-name">
+    <div className="goal-name" onClick={()=>{setShowModal(!showModal)}}>
       <div className="inner-gn-wrapper">
         {name}
         <div className="dot-space">
@@ -23,6 +34,12 @@ const Goal = ({ name }) => {
           return <GoDash className="dash" key={crypto.randomUUID()}/>
         })}
     </div>
+    <GoalModal
+      name={name}
+      open={showModal}
+      onClose={()=>{setShowModal(!showModal)}}
+      finishGoal={finishGoal}
+    />
   </div>
   )
 }

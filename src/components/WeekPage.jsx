@@ -8,7 +8,21 @@ const WeekPage = ({}) => {
   const days = ["M","T","W","T","F","S","S"]
 
   // UseState
-  const [goals, setgoals] = useState(["Kubernetes", "Leetcode"])
+  const [goals, setgoals] = useState(() => {
+    const goalArrStr = localStorage.getItem("goals")
+    const goalArr = JSON.parse(goalArrStr)
+    console.log("goalArrStr", goalArrStr)
+    console.log("goalArr", goalArr)
+    if (goalArr == null) {
+      return []
+    } else {
+      // console.log(goalArrObj)
+      return goalArr
+      // for (let key of goalArrObj) {
+      //   console.log(key)
+      // }
+    }
+  })
   const [showInput, setShowInput] = useState(false)
   const [newGoal, setNewGoal] = useState("")
   
@@ -24,6 +38,7 @@ const WeekPage = ({}) => {
   const navigate = useNavigate();
 
 
+
   const getWeeklyData = () => {
     // Goals: "K8s" Weeks: [1211, 1212, 1213] Daily: "0101011"
     const goalArrStr = localStorage.getItem("goals")
@@ -36,6 +51,11 @@ const WeekPage = ({}) => {
     }
   }
 
+  // Sync goal state
+  const updateGoalState = () => {
+    return
+  }
+
   // Toggle specified day of specified  goal
   const toggleGoalData = () => {
 
@@ -46,21 +66,33 @@ const WeekPage = ({}) => {
     const currAge = localStorage.getItem("age")
       // First goal ever - create goals obj
     if (prevWeeklyData == null) {
-      // Object with goalname as keys, values are each objects 
-      const newGoalObj = {
-        [goalName]: {weeks: {[currAge]: "0000000"}, active: "no"}
-      }       
-      localStorage.setItem("goals", JSON.stringify(newGoalObj))
+      // Array wrapping Object with goalname as keys, values are each objects 
+      const newGoalArr = [{
+        goalName: goalName, active: "yes", weeks: {[currAge]: "0000000"}
+      }]       
+      localStorage.setItem("goals", JSON.stringify(newGoalArr))
     } else {
       let newWeeklyData = prevWeeklyData
-      if (goalName in prevWeeklyData) { // goals obj exists + goalName existed
-        if (prevWeeklyData[goalName].active == "no") {
-          newWeeklyData[goalName].active = "yes"
-          // newWeeklyData[goalName].weeks[currAge] = "0000001" how to change week/day data
+      
+      let goalPresent = false
+      let goalIndex = 0
+      for (let obj in prevWeeklyData) {
+        if (goalName in obj) {
+          goalPresent = true
+          goalIndex = prevWeeklyData.indexOf(obj)
+        }
+      }
+
+      if (goalPresent) { // goals obj exists + goalName existed
+        if (prevWeeklyData[goalIndex][goalName].active == "no") {
+          newWeeklyData[goalIndex][goalName].active = "yes"
+          // newWeeklyData[goalIndex][goalName].weeks[currAge] = "0000001" how to change week/day data
           localStorage.setItem("goals", JSON.stringify(newWeeklyData))
         }
       } else { // goals obj existed + no goalName key
-        newWeeklyData[goalName] = {weeks: {[currAge]: "0000000"}, active: "no"}
+        newWeeklyData.push({
+          [goalName]: {weeks: {[currAge]: "0000000"}, active: "no"}
+        })
         localStorage.setItem("goals", JSON.stringify(newWeeklyData))
       }
     }
@@ -68,11 +100,14 @@ const WeekPage = ({}) => {
 
   const addGoal = () => {
     // TODO
-    setgoals([...goals, newGoal]) //Remove l8r
+    // setgoals([...goals, newGoal]) //Remove l8r
     setShowInput(false)
     // Update LS
     createNewGoal(newGoal)
     
+    // Update state
+    updateGoalState()
+
     // Reset input
     setNewGoal("")
   }
@@ -89,7 +124,7 @@ const WeekPage = ({}) => {
         </div>
         <div className="goal-ctnr">
           {goals.map(i => {
-            return <Goal name={i} key={crypto.randomUUID()}></Goal>
+            return <Goal name={i.goalName} key={crypto.randomUUID()}></Goal>
           })}
           <div className="ag-ctnr">
             <div className="ag-btn-ctnr">

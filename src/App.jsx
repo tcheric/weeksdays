@@ -42,11 +42,6 @@ function App() {
 
   // useNavigate
   const navigate = useNavigate();
-  
-  // Open/close modal
-  const toggleModal = () => {
-    setShowModal(!showModal)
-  }
 
   // Helper func for below
   const calcAgeWks = ( year, month, date ) => {
@@ -87,7 +82,7 @@ function App() {
       </div>
       <button 
         className="top-left-button" 
-        onClick={toggleModal}>
+        onClick={()=>{setShowModal(!showModal)}}>
         Input
       </button>
       <button 
@@ -97,7 +92,7 @@ function App() {
       </button>
       <Modal
         open={showModal}
-        onClose={toggleModal}
+        onClose={()=>{setShowModal(!showModal)}}
         onAdd={onAdd}
       />
     </>
