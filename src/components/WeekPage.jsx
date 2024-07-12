@@ -8,19 +8,14 @@ const WeekPage = ({}) => {
   const days = ["M","T","W","T","F","S","S"]
 
   // UseState
-  const [goals, setgoals] = useState(() => {
+  const [goals, setGoals] = useState(() => {
     const goalArrStr = localStorage.getItem("goals")
     const goalArr = JSON.parse(goalArrStr)
-    console.log("goalArrStr", goalArrStr)
-    console.log("goalArr", goalArr)
+    // console.log("RAN") //Doesn't run
     if (goalArr == null) {
       return []
     } else {
-      // console.log(goalArrObj)
       return goalArr
-      // for (let key of goalArrObj) {
-      //   console.log(key)
-      // }
     }
   })
   const [showInput, setShowInput] = useState(false)
@@ -33,11 +28,20 @@ const WeekPage = ({}) => {
     }
   }, [showInput]);
 
+  // useEffect(() => { 
+    // const goalArrStr = localStorage.getItem("goals")
+    // const goalArr = JSON.parse(goalArrStr)
+    // if (goalArr == null) {
+    //   setGoals([])
+    // } else {
+    //   setGoals([goalArr])
+    // }
+  // }
+  // ,[goals])
+
   // Random Hooks
   const params = useParams()
   const navigate = useNavigate();
-
-
 
   const getWeeklyData = () => {
     // Goals: "K8s" Weeks: [1211, 1212, 1213] Daily: "0101011"
@@ -49,11 +53,6 @@ const WeekPage = ({}) => {
       const goalArrObj = JSON.parse(goalArrStr)
       return goalArrObj
     }
-  }
-
-  // Sync goal state
-  const updateGoalState = () => {
-    return
   }
 
   // Toggle specified day of specified  goal
@@ -71,29 +70,32 @@ const WeekPage = ({}) => {
         goalName: goalName, active: "yes", weeks: {[currAge]: "0000000"}
       }]       
       localStorage.setItem("goals", JSON.stringify(newGoalArr))
+      setGoals(newGoalArr)
+
     } else {
       let newWeeklyData = prevWeeklyData
-      
       let goalPresent = false
       let goalIndex = 0
+
       for (let obj in prevWeeklyData) {
-        if (goalName in obj) {
+        if (obj.goalName == goalName) {
           goalPresent = true
           goalIndex = prevWeeklyData.indexOf(obj)
         }
       }
-
       if (goalPresent) { // goals obj exists + goalName existed
         if (prevWeeklyData[goalIndex][goalName].active == "no") {
           newWeeklyData[goalIndex][goalName].active = "yes"
           // newWeeklyData[goalIndex][goalName].weeks[currAge] = "0000001" how to change week/day data
           localStorage.setItem("goals", JSON.stringify(newWeeklyData))
+          setGoals(newWeeklyData)
         }
       } else { // goals obj existed + no goalName key
         newWeeklyData.push({
-          [goalName]: {weeks: {[currAge]: "0000000"}, active: "no"}
+          goalName: goalName, active: "yes", weeks: {[currAge]: "0000000"}
         })
         localStorage.setItem("goals", JSON.stringify(newWeeklyData))
+        setGoals(newWeeklyData)
       }
     }
   }
@@ -105,9 +107,6 @@ const WeekPage = ({}) => {
     // Update LS
     createNewGoal(newGoal)
     
-    // Update state
-    updateGoalState()
-
     // Reset input
     setNewGoal("")
   }
