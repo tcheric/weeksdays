@@ -52,7 +52,7 @@ const WeekPage = ({}) => {
   // Get goalIndex from goalName from LS. If no goalName in LS return -1
   const getGoalIndex = (goalName, prevWeeklyData) => {
     let goalIndex = -1
-    for (let obj in prevWeeklyData) {
+    for (let obj of prevWeeklyData) {
       if (obj.goalName == goalName) {
         goalIndex = prevWeeklyData.indexOf(obj)
       }
@@ -109,14 +109,18 @@ const WeekPage = ({}) => {
     let newWeeklyData = prevWeeklyData
     const goalIndex = getGoalIndex(goalName, prevWeeklyData)
 
-    if (prevWeeklyData[goalIndex][goalName].active == "yes") {
-      newWeeklyData[goalIndex][goalName].active == "no"
+    // console.log(goalIndex)
+    // console.log(prevWeeklyData[goalIndex])
+    if (prevWeeklyData[goalIndex].active == "yes") {
+      newWeeklyData[goalIndex].active = "no"
     }
     // TODO: Catch case if user attempts to finish inactive task, stop at prompt 
 
     // If-else to set final day as green or red
     if (result == "Success") {
+      console.log("success")
     } else if (result == "Failure") {
+      console.log("Failure")
     }
     updateGoalStateAndLS(newWeeklyData)
   }
@@ -162,6 +166,7 @@ const WeekPage = ({}) => {
                 id={"ag-input"}
                 type='text' 
                 spellCheck="false"
+                autocomplete="off" 
                 placeholder={"Add Goal"}
                 value = {newGoal} 
                 onChange={(e) => setNewGoal(e.target.value)}

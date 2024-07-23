@@ -29,9 +29,9 @@ const GoalModal = ({ name, open, onClose, finishGoal, clearGoal }) => {
             </div>}
 
             {(whichBC == 2) && <div className="gm-btn-ctnr">
-              <button className="gm-btn" onClick={finishGoal(name, "Success")}>
+              <button className="gm-btn" onClick={()=>finishGoal(name, "Success")}>
                 Success</button>
-              <button className="gm-btn" onClick={finishGoal(name, "Failure")}>
+              <button className="gm-btn" onClick={()=>finishGoal(name, "Failure")}>
                 Failure</button>
               <button className="gm-btn" onClick={()=>setWhichBC(1)}>
                 Cancel</button>
