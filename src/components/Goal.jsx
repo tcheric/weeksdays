@@ -4,19 +4,10 @@ import { GoDash, GoSquareFill } from "react-icons/go";
 import { RxDotsVertical } from "react-icons/rx";
 import GoalModal from "./GoalModal"
 
-const Goal = ({ name }) => {
+const Goal = ({ name, finishGoal, clearGoal }) => {
   // 1 = dot, 0 = dash
   const dotArr = [1,1,1,0,1,1,1]
   const [showModal, setShowModal] = useState(false)
-
-  const finishGoal = ( result ) => {
-    if (result == "Success") {
-
-    } else if (result == "Failure") {
-
-    }
-    return
-  }
 
   return (
   <div className="goal">
@@ -39,6 +30,7 @@ const Goal = ({ name }) => {
       open={showModal}
       onClose={()=>{setShowModal(!showModal)}}
       finishGoal={finishGoal}
+      clearGoal={clearGoal}
     />
   </div>
   )

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { FaTimes } from "react-icons/fa";
 
-const GoalModal = ({ name, open, onClose, finishGoal }) => {
+const GoalModal = ({ name, open, onClose, finishGoal, clearGoal }) => {
 
   if (!open) return null
 
@@ -29,9 +29,9 @@ const GoalModal = ({ name, open, onClose, finishGoal }) => {
             </div>}
 
             {(whichBC == 2) && <div className="gm-btn-ctnr">
-              <button className="gm-btn" onClick={finishGoal("Success")}>
+              <button className="gm-btn" onClick={finishGoal(name, "Success")}>
                 Success</button>
-              <button className="gm-btn" onClick={finishGoal("Failure")}>
+              <button className="gm-btn" onClick={finishGoal(name, "Failure")}>
                 Failure</button>
               <button className="gm-btn" onClick={()=>setWhichBC(1)}>
                 Cancel</button>
@@ -39,7 +39,8 @@ const GoalModal = ({ name, open, onClose, finishGoal }) => {
 
             {(whichBC == 3) && <div className="gm-btn-ctnr">
               <span>Are you sure?</span>
-              <button className="gm-btn">Yes</button>
+              <button className="gm-btn" onClick={()=>clearGoal(name)}>
+                Yes</button>
               <button className="gm-btn" onClick={()=>setWhichBC(1)}>
                 No</button>
             </div>}

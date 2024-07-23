@@ -28,25 +28,14 @@ const WeekPage = ({}) => {
     }
   }, [showInput]);
 
-  // useEffect(() => { 
-    // const goalArrStr = localStorage.getItem("goals")
-    // const goalArr = JSON.parse(goalArrStr)
-    // if (goalArr == null) {
-    //   setGoals([])
-    // } else {
-    //   setGoals([goalArr])
-    // }
-  // }
-  // ,[goals])
-
   // Random Hooks
   const params = useParams()
   const navigate = useNavigate();
 
+  // Helper func section START---
   const getWeeklyData = () => {
     // Goals: "K8s" Weeks: [1211, 1212, 1213] Daily: "0101011"
     const goalArrStr = localStorage.getItem("goals")
-
     if (goalArrStr === null) {
       return null
     } else { // If key in LS
@@ -55,10 +44,23 @@ const WeekPage = ({}) => {
     }
   }
 
-  // Toggle specified day of specified  goal
-  const toggleGoalData = () => {
-
+  const updateGoalStateAndLS = (newWeeklyData) => {
+    localStorage.setItem("goals", JSON.stringify(newWeeklyData))
+    setGoals(newWeeklyData)
   }
+
+  // Get goalIndex from goalName from LS. If no goalName in LS return -1
+  const getGoalIndex = (goalName, prevWeeklyData) => {
+    let goalIndex = -1
+    for (let obj in prevWeeklyData) {
+      if (obj.goalName == goalName) {
+        goalIndex = prevWeeklyData.indexOf(obj)
+      }
+    }
+    return goalIndex
+  }
+  // Helper func section END---
+
 
   const createNewGoal = (goalName) => {
     const prevWeeklyData = getWeeklyData()
@@ -69,46 +71,63 @@ const WeekPage = ({}) => {
       const newGoalArr = [{
         goalName: goalName, active: "yes", weeks: {[currAge]: "0000000"}
       }]       
-      localStorage.setItem("goals", JSON.stringify(newGoalArr))
-      setGoals(newGoalArr)
-
+      updateGoalStateAndLS(newGoalArr)
     } else {
       let newWeeklyData = prevWeeklyData
-      let goalPresent = false
-      let goalIndex = 0
-
-      for (let obj in prevWeeklyData) {
-        if (obj.goalName == goalName) {
-          goalPresent = true
-          goalIndex = prevWeeklyData.indexOf(obj)
-        }
-      }
-      if (goalPresent) { // goals obj exists + goalName existed
+      const goalIndex = getGoalIndex(goalName, prevWeeklyData)
+      if (goalIndex != -1) { // goals obj exists + goalName existed
         if (prevWeeklyData[goalIndex][goalName].active == "no") {
           newWeeklyData[goalIndex][goalName].active = "yes"
-          // newWeeklyData[goalIndex][goalName].weeks[currAge] = "0000001" how to change week/day data
-          localStorage.setItem("goals", JSON.stringify(newWeeklyData))
-          setGoals(newWeeklyData)
+          updateGoalStateAndLS(newWeeklyData)
         }
       } else { // goals obj existed + no goalName key
         newWeeklyData.push({
           goalName: goalName, active: "yes", weeks: {[currAge]: "0000000"}
         })
-        localStorage.setItem("goals", JSON.stringify(newWeeklyData))
-        setGoals(newWeeklyData)
+        updateGoalStateAndLS(newWeeklyData)
       }
     }
   }
 
   const addGoal = () => {
-    // TODO
-    // setgoals([...goals, newGoal]) //Remove l8r
-    setShowInput(false)
-    // Update LS
-    createNewGoal(newGoal)
-    
-    // Reset input
-    setNewGoal("")
+    if (newGoal !== "") {
+      setShowInput(false)
+      createNewGoal(newGoal)
+      setNewGoal("") 
+    }
+  }
+
+  // Toggle specified day of specified  goal
+  const toggleGoalData = () => {
+
+  }
+
+  // Called thru GoalModal > Goal > WeekPage
+  const finishGoal = ( goalName, result ) => {
+    // Get relevant entry
+    const prevWeeklyData = getWeeklyData()
+    let newWeeklyData = prevWeeklyData
+    const goalIndex = getGoalIndex(goalName, prevWeeklyData)
+
+    if (prevWeeklyData[goalIndex][goalName].active == "yes") {
+      newWeeklyData[goalIndex][goalName].active == "no"
+    }
+    // TODO: Catch case if user attempts to finish inactive task, stop at prompt 
+
+    // If-else to set final day as green or red
+    if (result == "Success") {
+    } else if (result == "Failure") {
+    }
+    updateGoalStateAndLS(newWeeklyData)
+  }
+
+  const clearGoal = ( goalName ) => {
+    // Get relevant entry
+    const prevWeeklyData = getWeeklyData()
+    let newWeeklyData = prevWeeklyData
+    const goalIndex = getGoalIndex(goalName, prevWeeklyData)
+    newWeeklyData.splice(goalIndex, 1)
+    updateGoalStateAndLS(newWeeklyData)
   }
 
   return (
@@ -123,7 +142,12 @@ const WeekPage = ({}) => {
         </div>
         <div className="goal-ctnr">
           {goals.map(i => {
-            return <Goal name={i.goalName} key={crypto.randomUUID()}></Goal>
+            return <Goal
+              name={i.goalName}
+              key={crypto.randomUUID()}
+              finishGoal={finishGoal}
+              clearGoal={clearGoal}
+            />
           })}
           <div className="ag-ctnr">
             <div className="ag-btn-ctnr">
@@ -141,6 +165,9 @@ const WeekPage = ({}) => {
                 placeholder={"Add Goal"}
                 value = {newGoal} 
                 onChange={(e) => setNewGoal(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.code == "Enter") addGoal()
+                }}
               />
               <button 
                 className="add-goal-button"
