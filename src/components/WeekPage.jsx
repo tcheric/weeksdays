@@ -125,6 +125,14 @@ const WeekPage = ({}) => {
     updateGoalStateAndLS(newWeeklyData)
   }
 
+  const renameGoal = ( newGoalName, oldGoalName ) => {
+    let newWeeklyData = getWeeklyData()
+    const goalIndex = getGoalIndex(oldGoalName, newWeeklyData)
+
+    newWeeklyData[goalIndex].goalName = newGoalName
+    updateGoalStateAndLS(newWeeklyData)
+  }
+
   const clearGoal = ( goalName ) => {
     // Get relevant entry
     const prevWeeklyData = getWeeklyData()
@@ -151,6 +159,7 @@ const WeekPage = ({}) => {
               key={crypto.randomUUID()}
               finishGoal={finishGoal}
               clearGoal={clearGoal}
+              renameGoal={renameGoal}
             />
           })}
           <div className="ag-ctnr">
@@ -166,7 +175,7 @@ const WeekPage = ({}) => {
                 id={"ag-input"}
                 type='text' 
                 spellCheck="false"
-                autocomplete="off" 
+                autoComplete="off" 
                 placeholder={"Add Goal"}
                 value = {newGoal} 
                 onChange={(e) => setNewGoal(e.target.value)}

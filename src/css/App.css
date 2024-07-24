@@ -434,3 +434,16 @@ li {
 .gm-btn-ctnr span {
   margin: 8px 0 8px 0;
 }
+
+.gm-btn-ctnr-wide {
+  height: 120px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.gm-btn-ctnr-wide span {
+  margin-bottom: 10px;
+}
