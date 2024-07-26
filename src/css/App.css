@@ -311,13 +311,13 @@ li {
 .dash {
   margin-inline: 36px;
   font-size: 26px;
-  /* flex-shrink: 0 */
+  cursor: pointer;
 }
 
 .dot {
   margin-inline: 36px;
   font-size: 26px;
-  /* flex-shrink: 0 */
+  cursor: pointer;
 }
 
 .left-button {

@@ -4,10 +4,25 @@ import { GoDash, GoSquareFill } from "react-icons/go";
 import { RxDotsVertical } from "react-icons/rx";
 import GoalModal from "./GoalModal"
 
-const Goal = ({ name, finishGoal, clearGoal, renameGoal }) => {
-  // 1 = dot, 0 = dash
-  const dotArr = [1,1,1,0,1,1,1]
+const Goal = ({ name, finishGoal, clearGoal, renameGoal, toggleGoalData }) => {
+  // 0 = dash, 1 = dot, 2 = success, 3 = fail
+  const [dotArr, setDotArr] = useState([0,0,0,0,0,0,0])
   const [showModal, setShowModal] = useState(false)
+
+  const toggle = (index) => {
+    const prevVal = dotArr[index]
+    const newDotArr = dotArr.map((val, i) => {
+      if (i == index) {
+        if (val === 0) return 1
+        if (val === 1) return 0
+      } else {
+        return val
+      }
+    })
+    setDotArr(newDotArr)
+    const dotArrString = newDotArr.join("")
+    toggleGoalData(dotArrString, name)
+  }
 
   return (
   <div className="goal">
@@ -20,9 +35,21 @@ const Goal = ({ name, finishGoal, clearGoal, renameGoal }) => {
       </div>
     </div>
     <div className="dots-lines">
-        {dotArr.map(i => {
-          if (i == 1) return <GoSquareFill className="dot" key={crypto.randomUUID()}/>
-          return <GoDash className="dash" key={crypto.randomUUID()}/>
+        {dotArr.map((val, index) => {
+          if (val == 0) { 
+            return <GoDash 
+              id={index} 
+              className="dash" 
+              key={crypto.randomUUID()}
+              onClick={()=>toggle(index)}/>
+          } else if (val == 1) {
+            return <GoSquareFill 
+              id={index} 
+              className="dot" 
+              key={crypto.randomUUID()}
+              onClick={()=>toggle(index)}/>
+          }
+          return
         })}
     </div>
     <GoalModal

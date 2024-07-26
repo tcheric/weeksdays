@@ -34,7 +34,6 @@ const WeekPage = ({}) => {
 
   // Helper func section START---
   const getWeeklyData = () => {
-    // Goals: "K8s" Weeks: [1211, 1212, 1213] Daily: "0101011"
     const goalArrStr = localStorage.getItem("goals")
     if (goalArrStr === null) {
       return null
@@ -97,9 +96,16 @@ const WeekPage = ({}) => {
     }
   }
 
-  // Toggle specified day of specified  goal
-  const toggleGoalData = () => {
+  // Toggle specified day of specified goal
+  const toggleGoalData = ( dotArrString, goalName ) => {
+    const prevWeeklyData = getWeeklyData()
+    let newWeeklyData = prevWeeklyData
+    const goalIndex = getGoalIndex(goalName, prevWeeklyData)
 
+    const week = params.weekNum
+    newWeeklyData[goalIndex].weeks[week] = dotArrString
+    localStorage.setItem("goals", JSON.stringify(newWeeklyData)) 
+    // UGSALS func above causes setstate conflict
   }
 
   // Called thru GoalModal > Goal > WeekPage
@@ -109,8 +115,6 @@ const WeekPage = ({}) => {
     let newWeeklyData = prevWeeklyData
     const goalIndex = getGoalIndex(goalName, prevWeeklyData)
 
-    // console.log(goalIndex)
-    // console.log(prevWeeklyData[goalIndex])
     if (prevWeeklyData[goalIndex].active == "yes") {
       newWeeklyData[goalIndex].active = "no"
     }
@@ -160,6 +164,7 @@ const WeekPage = ({}) => {
               finishGoal={finishGoal}
               clearGoal={clearGoal}
               renameGoal={renameGoal}
+              toggleGoalData={toggleGoalData}
             />
           })}
           <div className="ag-ctnr">

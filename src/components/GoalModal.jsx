@@ -64,7 +64,7 @@ const GoalModal = ({ name, open, onClose, finishGoal, clearGoal, renameGoal }) =
                   value = {newName} 
                   onChange={(e) => setNewName(e.target.value)}
                   onKeyDown={(e) => {
-                    if (e.code == "Enter") {}
+                    if (e.code == "Enter") renameGoalCurrState()
                   }}
                 />
                 <button 
