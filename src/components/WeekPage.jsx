@@ -60,6 +60,24 @@ const WeekPage = ({}) => {
   }
   // Helper func section END---
 
+  // Arrow nav Event listener 
+  document.onkeydown = (e) => {
+    switch (e.code) {
+      case "ArrowUp":
+        let firstWk = Number(localStorage.getItem("firstWeek"))
+        let prevWk = Number(params.weekNum) - 1
+        if (prevWk >= firstWk) navigate(`/week/${prevWk}`)
+        break;
+      case "ArrowDown":
+        let nextWk = Number(params.weekNum) + 1
+        let maxWk = Number(localStorage.getItem("age"))
+        if (nextWk <= maxWk) navigate(`/week/${nextWk}`)
+        break
+      case "ArrowLeft":
+        navigate(`/`)
+        break
+    }
+  }
 
   const createNewGoal = (goalName) => {
     const prevWeeklyData = getWeeklyData()
@@ -71,6 +89,9 @@ const WeekPage = ({}) => {
         goalName: goalName, active: "yes", weeks: {[currAge]: "0000000"}
       }]       
       updateGoalStateAndLS(newGoalArr)
+      // Set 1st wk ever
+      let age = localStorage.getItem("age")
+      localStorage.setItem("firstWeek", age)
     } else {
       let newWeeklyData = prevWeeklyData
       const goalIndex = getGoalIndex(goalName, prevWeeklyData)
@@ -105,7 +126,7 @@ const WeekPage = ({}) => {
     const week = params.weekNum
     newWeeklyData[goalIndex].weeks[week] = dotArrString
     localStorage.setItem("goals", JSON.stringify(newWeeklyData)) 
-    // UGSALS func above causes setstate conflict
+    // UGSALS func above causes setstate conflict as Goal key=uuid() not stored
   }
 
   // Called thru GoalModal > Goal > WeekPage

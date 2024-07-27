@@ -63,6 +63,11 @@ function App() {
     setShowModal(false)
   }
 
+  // Arrow nav
+  document.onkeydown = (e) => {
+    if (e.code === "ArrowRight") navigate(`/week/${ageWks}`)
+  }
+
   return (
     <>
       <div className="wks-ctnr">

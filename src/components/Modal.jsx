@@ -40,7 +40,7 @@ const Modal = ({ onAdd, open, onClose }) => {
           <form 
             className="dob-form" 
             onSubmit={onSubmit}
-            autocomplete="off"
+            autoComplete="off"
           >
             <label className="label">Enter your birth date:</label>
             <div className="input-container">
