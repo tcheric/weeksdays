@@ -167,10 +167,14 @@ const WeekPage = ({}) => {
     updateGoalStateAndLS(newWeeklyData)
   }
 
+  const editWeekNo = () => {
+    weekNo = document.getElementById("weekNo")
+  }
+  
   return (
   <>
     <div className="wk-ctnr">
-      <h1>W{params.weekNum}</h1> 
+      <h1 id="weekNo" onclick={editWeekNo}>W{params.weekNum}</h1> 
       <div className="outer-goal-ctnr">
         <div className="day-axis">
           {days.map(i => {
