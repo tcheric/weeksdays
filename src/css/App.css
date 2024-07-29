@@ -177,7 +177,7 @@ li {
   border-radius: 10px;
   border: 1px solid grey;
   text-align: center;
-  padding: 7px 0 7px 0;
+  padding: 7px 0 10px 0;
   font-size: 40px;
 }
 
@@ -220,11 +220,50 @@ li {
   /* background-color: rgb(236, 236, 236); */
 }
 
+/* Weekpage Heading */
 .wk-ctnr h1 {
+  cursor: pointer;
+  user-select: none;
+}
+
+.weekNo {
   text-align: center;
   font-size: 68px;
   font-weight: normal;
   margin: 100px 0 50px 0;
+}
+
+#wn-ctnr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 100px 0 50px 0;
+  width: 220px;
+  height: 102px;
+}
+
+#wn-w {
+  font-weight: normal;
+  font-size: 68px;
+}
+
+#wn-input {
+  width: 144px;
+  height: 60px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 0 4px;
+  font-size: 56px;
+  color: rgb(61, 61, 61);
+}
+
+#wn-input::placeholder {
+  font-size: 50px;
+  margin: auto;
 }
 
 .day-axis {
@@ -342,9 +381,6 @@ li {
   align-items: center;
   justify-content: end;
   margin-right: 3%;
-}
-
-.input-showing {
 }
 
 .add-goal-button {

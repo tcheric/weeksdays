@@ -20,13 +20,33 @@ const WeekPage = ({}) => {
   })
   const [showInput, setShowInput] = useState(false)
   const [newGoal, setNewGoal] = useState("")
+  const [weekNoEdit, setWeekNoEdit] = useState(false)
+  const [searchedWk, setSearchedWk] = useState("")
   
-  // UseEffect
+  // UseEffects
   useEffect(() => {
     if (showInput) {
       document.getElementById("ag-input").focus()
     }
   }, [showInput]);
+
+  useEffect(() => {
+    const clickCancel = (e) => {
+      if (e.target.className !== "weekNo" && e.target.id !=="wn-input") {
+        setSearchedWk("")
+        setWeekNoEdit(false)
+      }
+    }
+
+    if (weekNoEdit) {
+      const wnInput = document.getElementById("wn-input")
+      wnInput.focus()
+      window.addEventListener('click', clickCancel)
+    }
+    return () => {
+      window.removeEventListener('click', clickCancel);
+    }
+  }, [weekNoEdit]);
 
   // Random Hooks
   const params = useParams()
@@ -57,6 +77,10 @@ const WeekPage = ({}) => {
       }
     }
     return goalIndex
+  }
+
+  const isCharNumber = (c) => {
+    return c >= '0' && c <= '9';
   }
   // Helper func section END---
 
@@ -167,14 +191,52 @@ const WeekPage = ({}) => {
     updateGoalStateAndLS(newWeeklyData)
   }
 
-  const editWeekNo = () => {
-    weekNo = document.getElementById("weekNo")
+  const searchWeek = () => {
+    console.log("Search")
+    let sw = Number(searchedWk)
+    let fw = Number(localStorage.getItem("firstWeek"))
+    let age = Number(localStorage.getItem("age"))
+    if (sw < fw || sw > age) {
+      // TODO: set invalid
+    } else {
+      navigate(`/week/${sw}`)
+      setWeekNoEdit(false)
+      setSearchedWk("")
+    }
   }
   
   return (
   <>
     <div className="wk-ctnr">
-      <h1 id="weekNo" onclick={editWeekNo}>W{params.weekNum}</h1> 
+      {!weekNoEdit && <h1 
+        className="weekNo" 
+        onClick={()=>{
+          setWeekNoEdit(true)
+        }}>
+          W{params.weekNum}
+        </h1>
+      } 
+      {weekNoEdit && <div id="wn-ctnr">
+        <h1 id="wn-w">W</h1>
+        <input 
+        id="wn-input"
+        type='text' 
+        spellCheck="false"
+        autoComplete="off" 
+        value = {searchedWk} 
+        onChange={(e) => {
+          let value = e.target.value
+          if (value.length > 4
+              || (value.length > 0 && !isCharNumber(value.slice(-1)))) {
+              return
+          }
+          setSearchedWk(e.target.value)
+        }}
+        onKeyDown={(e) => {
+          if (e.code == "Enter") searchWeek()
+        }}
+        />
+      </div>}
       <div className="outer-goal-ctnr">
         <div className="day-axis">
           {days.map(i => {

@@ -99,6 +99,7 @@ const Modal = ({ onAdd, open, onClose }) => {
                   if (value.length > 0 && !isCharNumber(value.slice(-1))
                       || value.length == 4 && (age > 80 || age < 0)) {
                     setInvalid(true)
+                    return
                   }
                   setyear(e.target.value)
                 }}

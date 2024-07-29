@@ -22,6 +22,12 @@ function App() {
     return (ageLS === null) ? 0 : Number(ageLS)
   })
 
+  // Helper func for below
+  const calcAgeWks = ( year, month, date ) => {
+    let dobObj = new Date(Number(year), Number(month-1), Number(date))
+    return Math.round((new Date() - dobObj) / (7 * 24 * 60 * 60 * 1000));
+  }
+
   // UseEffect
   useEffect(() => {
     if (dob) {
@@ -31,6 +37,7 @@ function App() {
       let month = dob.slice(2,4)
       let year = dob.slice(4,8)
       let weekAge = calcAgeWks(year, month, date)
+      console.log("week age", weekAge)
       localStorage.setItem("age", weekAge)
       setAgeWks(weekAge)
     } else {
@@ -42,12 +49,6 @@ function App() {
 
   // useNavigate
   const navigate = useNavigate();
-
-  // Helper func for below
-  const calcAgeWks = ( year, month, date ) => {
-    let dobObj = new Date(Number(year), Number(month-1), Number(date))
-    return Math.round((new Date() - dobObj) / (7 * 24 * 60 * 60 * 1000));
-  }
 
   const onAdd = ({date, month, year}) => {
     // Calculate age
