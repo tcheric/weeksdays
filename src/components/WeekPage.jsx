@@ -7,21 +7,18 @@ const WeekPage = ({}) => {
   // Hardcoded data
   const days = ["M","T","W","T","F","S","S"]
 
-  // UseState
+  // UseStates
   const [goals, setGoals] = useState(() => {
     const goalArrStr = localStorage.getItem("goals")
     const goalArr = JSON.parse(goalArrStr)
-    // console.log("RAN") //Doesn't run
-    if (goalArr == null) {
-      return []
-    } else {
-      return goalArr
-    }
+    if (goalArr == null) return []
+    else return goalArr
   })
   const [showInput, setShowInput] = useState(false)
   const [newGoal, setNewGoal] = useState("")
   const [weekNoEdit, setWeekNoEdit] = useState(false)
   const [searchedWk, setSearchedWk] = useState("")
+  const [invalid, setInvalid] = useState(false)
   
   // UseEffects
   useEffect(() => {
@@ -35,6 +32,7 @@ const WeekPage = ({}) => {
       if (e.target.className !== "weekNo" && e.target.id !=="wn-input") {
         setSearchedWk("")
         setWeekNoEdit(false)
+        setInvalid(false)
       }
     }
 
@@ -103,6 +101,45 @@ const WeekPage = ({}) => {
     }
   }
 
+  // Called whenever weekPage is opened
+  const autoUpdateGoals = () => {
+    // Fetch current week
+    const currAge = localStorage.getItem("age")
+    // Loop through every goal
+    const prevWeeklyData = getWeeklyData()
+    let newWeeklyData = prevWeeklyData
+
+    for (const goal of prevWeeklyData) {
+      if (goal.active === "yes") {
+        // If goal is active (not "Finished"), fill in missing weeks
+
+        // Get latest recorded week by checking keys in obj
+        const weeksArr = Object.keys(goal.weeks)
+        
+        let mostRecentWk = 0
+        for (let stringWk of weeksArr) {
+          if (Number(stringWk) > mostRecentWk) mostRecentWk = Number(stringWk) 
+        } 
+
+        // Use getGoalIndex to edit newWeeklyData
+        const gi = getGoalIndex(goal.goalName, prevWeeklyData)
+
+        if (mostRecentWk < currAge) {
+          let wkPtr = mostRecentWk
+          while (wkPtr <= currAge) {
+            wkPtr = wkPtr + 1
+            newWeeklyData[gi].weeks[wkPtr] = "0000000"
+            console.log(newWeeklyData)
+          }
+        }
+
+      }
+    }
+
+
+    // If the goal has been finished, fill in missing weeks from restartPoint
+  }
+
   const createNewGoal = (goalName) => {
     const prevWeeklyData = getWeeklyData()
     const currAge = localStorage.getItem("age")
@@ -110,7 +147,7 @@ const WeekPage = ({}) => {
     if (prevWeeklyData == null) {
       // Array wrapping Object with goalname as keys, values are each objects 
       const newGoalArr = [{
-        goalName: goalName, active: "yes", weeks: {[currAge]: "0000000"}
+        goalName: goalName, active: "yes", restartPoint: "no", weeks: {[currAge]: "0000000"}
       }]       
       updateGoalStateAndLS(newGoalArr)
       // Set 1st wk ever
@@ -126,7 +163,7 @@ const WeekPage = ({}) => {
         }
       } else { // goals obj existed + no goalName key
         newWeeklyData.push({
-          goalName: goalName, active: "yes", weeks: {[currAge]: "0000000"}
+          goalName: goalName, active: "yes", restartPoint: "no", weeks: {[currAge]: "0000000"}
         })
         updateGoalStateAndLS(newWeeklyData)
       }
@@ -197,7 +234,7 @@ const WeekPage = ({}) => {
     let fw = Number(localStorage.getItem("firstWeek"))
     let age = Number(localStorage.getItem("age"))
     if (sw < fw || sw > age) {
-      // TODO: set invalid
+      setInvalid(true)
     } else {
       navigate(`/week/${sw}`)
       setWeekNoEdit(false)
@@ -220,11 +257,13 @@ const WeekPage = ({}) => {
         <h1 id="wn-w">W</h1>
         <input 
         id="wn-input"
+        className={`${invalid ? "invalid" : ''}`}
         type='text' 
         spellCheck="false"
         autoComplete="off" 
         value = {searchedWk} 
         onChange={(e) => {
+          if (invalid) setInvalid(false)
           let value = e.target.value
           if (value.length > 4
               || (value.length > 0 && !isCharNumber(value.slice(-1)))) {
@@ -258,7 +297,8 @@ const WeekPage = ({}) => {
             <div className="ag-btn-ctnr">
               {!showInput && <button 
                 className="add-goal-button plus"
-                onClick={() => {setShowInput(true)}}>
+                // onClick={() => {setShowInput(true)}}>
+                onClick={autoUpdateGoals}>
                 +
               </button>}
             </div>

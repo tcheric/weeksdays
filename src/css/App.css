@@ -261,6 +261,10 @@ li {
   color: rgb(61, 61, 61);
 }
 
+#wn-ctnr .invalid{
+  color: red;
+}
+
 #wn-input::placeholder {
   font-size: 50px;
   margin: auto;

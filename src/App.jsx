@@ -31,17 +31,16 @@ function App() {
   // UseEffect
   useEffect(() => {
     if (dob) {
-      console.log("dob inputted")
       // Re-calc age and update ageWks usestate and LS
       let date = dob.slice(0,2)
       let month = dob.slice(2,4)
       let year = dob.slice(4,8)
       let weekAge = calcAgeWks(year, month, date)
-      console.log("week age", weekAge)
       localStorage.setItem("age", weekAge)
       setAgeWks(weekAge)
+
+      // If age is different to age in local storage, edit goals
     } else {
-      console.log("Nah not inputted")
       setShowModal(true)
     }
   }
@@ -50,6 +49,7 @@ function App() {
   // useNavigate
   const navigate = useNavigate();
 
+  // From age input modal
   const onAdd = ({date, month, year}) => {
     // Calculate age
     const weekAge = calcAgeWks(year, month, date)
