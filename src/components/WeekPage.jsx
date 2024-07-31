@@ -109,35 +109,32 @@ const WeekPage = ({}) => {
     const prevWeeklyData = getWeeklyData()
     let newWeeklyData = prevWeeklyData
 
+    // If goal is active (not "Finished"), fill in missing weeks
     for (const goal of prevWeeklyData) {
       if (goal.active === "yes") {
-        // If goal is active (not "Finished"), fill in missing weeks
 
         // Get latest recorded week by checking keys in obj
-        const weeksArr = Object.keys(goal.weeks)
-        
+        const weeksArr = Object.keys(goal.weeks)        
         let mostRecentWk = 0
         for (let stringWk of weeksArr) {
           if (Number(stringWk) > mostRecentWk) mostRecentWk = Number(stringWk) 
-        } 
+        }
 
         // Use getGoalIndex to edit newWeeklyData
         const gi = getGoalIndex(goal.goalName, prevWeeklyData)
 
-        if (mostRecentWk < currAge) {
-          let wkPtr = mostRecentWk
-          while (wkPtr <= currAge) {
-            wkPtr = wkPtr + 1
-            newWeeklyData[gi].weeks[wkPtr] = "0000000"
-            console.log(newWeeklyData)
-          }
+        // Get restart point, if applicable fill from there
+        const rp = Number(prevWeeklyData[gi].restartPoint)
+      
+        let wkPtr = (mostRecentWk > rp) ? mostRecentWk : (rp - 1) // include the restart week
+        while (wkPtr < currAge) {
+          wkPtr = wkPtr + 1
+          newWeeklyData[gi].weeks[wkPtr] = "0000000"
+          console.log(newWeeklyData)
         }
-
+        localStorage.setItem("goals", JSON.stringify(newWeeklyData)) 
       }
     }
-
-
-    // If the goal has been finished, fill in missing weeks from restartPoint
   }
 
   const createNewGoal = (goalName) => {
@@ -147,7 +144,7 @@ const WeekPage = ({}) => {
     if (prevWeeklyData == null) {
       // Array wrapping Object with goalname as keys, values are each objects 
       const newGoalArr = [{
-        goalName: goalName, active: "yes", restartPoint: "no", weeks: {[currAge]: "0000000"}
+        goalName: goalName, active: "yes", restartPoint: "-1", weeks: {[currAge]: "0000000"}
       }]       
       updateGoalStateAndLS(newGoalArr)
       // Set 1st wk ever
@@ -158,12 +155,13 @@ const WeekPage = ({}) => {
       const goalIndex = getGoalIndex(goalName, prevWeeklyData)
       if (goalIndex != -1) { // goals obj exists + goalName existed
         if (prevWeeklyData[goalIndex][goalName].active == "no") {
-          newWeeklyData[goalIndex][goalName].active = "yes"
+          newWeeklyData[goalIndex].active = "yes"
+          newWeeklyData[goalIndex].restartPoint = localStorage.getItem("age")
           updateGoalStateAndLS(newWeeklyData)
         }
-      } else { // goals obj existed + no goalName key
+      } else { // goals obj exist + no goalName key
         newWeeklyData.push({
-          goalName: goalName, active: "yes", restartPoint: "no", weeks: {[currAge]: "0000000"}
+          goalName: goalName, active: "yes", restartPoint: "-1", weeks: {[currAge]: "0000000"}
         })
         updateGoalStateAndLS(newWeeklyData)
       }
