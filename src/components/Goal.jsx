@@ -4,9 +4,13 @@ import { GoDash, GoSquareFill } from "react-icons/go";
 import { RxDotsVertical } from "react-icons/rx";
 import GoalModal from "./GoalModal"
 
-const Goal = ({ name, finishGoal, clearGoal, renameGoal, toggleGoalData }) => {
+const Goal = ({ name, goalData, finishGoal, clearGoal, renameGoal, toggleGoalData }) => {
   // 0 = dash, 1 = dot, 2 = success, 3 = fail
-  const [dotArr, setDotArr] = useState([0,0,0,0,0,0,0])
+  // const [dotArr, setDotArr] = useState([0,0,0,0,0,0,0])
+  const [dotArr, setDotArr] = useState(() => {
+    return goalData
+  })
+  
   const [showModal, setShowModal] = useState(false)
 
   const toggle = (index) => {

@@ -126,7 +126,7 @@ const WeekPage = ({}) => {
         // Get restart point, if applicable fill from there
         const rp = Number(prevWeeklyData[gi].restartPoint)
       
-        let wkPtr = (mostRecentWk > rp) ? mostRecentWk : (rp - 1) // include the restart week
+        let wkPtr = (mostRecentWk >= rp) ? mostRecentWk : (rp - 1) // include the restart week
         while (wkPtr < currAge) {
           wkPtr = wkPtr + 1
           newWeeklyData[gi].weeks[wkPtr] = "0000000"
@@ -136,6 +136,10 @@ const WeekPage = ({}) => {
       }
     }
   }
+  useEffect(() => {
+    autoUpdateGoals()
+  }, [])
+  
 
   const createNewGoal = (goalName) => {
     const prevWeeklyData = getWeeklyData()
@@ -195,11 +199,10 @@ const WeekPage = ({}) => {
     let newWeeklyData = prevWeeklyData
     const goalIndex = getGoalIndex(goalName, prevWeeklyData)
 
-    if (prevWeeklyData[goalIndex].active == "yes") {
-      newWeeklyData[goalIndex].active = "no"
-    }
-    // TODO: Catch case if user attempts to finish inactive task, stop at prompt 
+    // Catch case if user attempts to finish inactive task - do nothing 
+    if (prevWeeklyData[goalIndex].active == "no") return
 
+    newWeeklyData[goalIndex].active = "no"
     // If-else to set final day as green or red
     if (result == "Success") {
       console.log("success")
@@ -240,6 +243,21 @@ const WeekPage = ({}) => {
     }
   }
   
+  const getGoalDataArr = ( goalName ) => {
+    const weeklyData = getWeeklyData()
+    // if (weeklyData === null) return null
+
+    const gi = getGoalIndex(goalName, weeklyData)
+    let strData = weeklyData[gi].weeks[params.weekNum]
+
+    // If that week has no data, do not show the goal at all
+    if (strData === undefined) return -1
+
+    let arrData = strData.split('')
+    console.log(arrData)
+    return arrData
+  }
+
   return (
   <>
     <div className="wk-ctnr">
@@ -282,14 +300,15 @@ const WeekPage = ({}) => {
         </div>
         <div className="goal-ctnr">
           {goals.map(i => {
-            return <Goal
+            return (getGoalDataArr !== -1) && <Goal
               name={i.goalName}
               key={crypto.randomUUID()}
+              goalData={getGoalDataArr(i.goalName)}
               finishGoal={finishGoal}
               clearGoal={clearGoal}
               renameGoal={renameGoal}
               toggleGoalData={toggleGoalData}
-            />
+            /> 
           })}
           <div className="ag-ctnr">
             <div className="ag-btn-ctnr">

@@ -292,6 +292,7 @@ li {
   font-size: 14px;
   width: 26px;
   text-align: center;
+  user-select: none;
 }
 
 .goal {
