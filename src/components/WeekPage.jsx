@@ -67,10 +67,10 @@ const WeekPage = ({}) => {
   }
 
   // Get goalIndex from goalName from LS. If no goalName in LS return -1
-  const getGoalIndex = (goalName, prevWeeklyData) => {
+  const getGoalIndex = (goalNameInput, prevWeeklyData) => {
     let goalIndex = -1
     for (let obj of prevWeeklyData) {
-      if (obj.goalName == goalName) {
+      if (obj.goalName == goalNameInput) {
         goalIndex = prevWeeklyData.indexOf(obj)
       }
     }
@@ -245,18 +245,14 @@ const WeekPage = ({}) => {
   
   const getGoalDataArr = ( goalName ) => {
     const weeklyData = getWeeklyData()
-    // if (weeklyData === null) return null
 
     const gi = getGoalIndex(goalName, weeklyData)
     let strData = weeklyData[gi].weeks[params.weekNum]
-
-    console.log(strData)
 
     // If that week has no data, do not show the goal at all
     if (strData === undefined) return -1
 
     let arrData = strData.split('')
-    // console.log(arrData)
     return arrData
   }
 
@@ -302,7 +298,7 @@ const WeekPage = ({}) => {
         </div>
         <div className="goal-ctnr">
           {goals.map(i => {
-            (getGoalDataArr !== -1) && <Goal
+            return (getGoalDataArr(i.goalName) !== -1) && <Goal
               name={i.goalName}
               key={crypto.randomUUID()}
               goalData={getGoalDataArr(i.goalName)}
