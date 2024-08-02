@@ -22,6 +22,11 @@ function App() {
     return (ageLS === null) ? 0 : Number(ageLS)
   })
 
+  const [firstWkDiff, setFirstWkDiff] = useState(() => {
+    const fwLS = localStorage.getItem("firstWeek")
+    return (fwLS === null) ? 0 : ageWks - Number(fwLS)
+  })
+
   // Helper func for below
   const calcAgeWks = ( year, month, date ) => {
     let dobObj = new Date(Number(year), Number(month-1), Number(date))
@@ -83,7 +88,7 @@ function App() {
               return <span key={i}>{i}</span>
             })}
           </div>
-          <Grid green={ageWks}/>
+          <Grid ageWeeks={ageWks} firstWeekDiff={firstWkDiff + 1}/>
         </div>
       </div>
       <button 

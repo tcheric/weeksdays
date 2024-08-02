@@ -50,6 +50,9 @@ li {
 
 .green{
   background-color: rgb(55, 245, 55);
+}
+
+.click {
   cursor: pointer;
 }
 

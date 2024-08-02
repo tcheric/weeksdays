@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"
-const Grid = ({ green }) => {
+import { useNavigate, useParams } from "react-router-dom";
+
+const Grid = ({ ageWeeks, firstWeekDiff }) => {
 
   const populateArr = (lenArr) => {
     let arr =  new Array(lenArr)
@@ -10,29 +12,39 @@ const Grid = ({ green }) => {
   }
 
   const [mapArrGreen, setmapArrGreen] = useState(()=>{
-    return populateArr(green)
+    return populateArr(ageWeeks-firstWeekDiff)
+  })
+
+  const [mapArrGreenClick, setmapArrGreenClick] = useState(()=>{
+    return populateArr(firstWeekDiff)
   })
 
   const [mapArr, setmapArr] = useState(()=>{
-    return populateArr(4160-green)
+    return populateArr(4160-ageWeeks)
   })
   
   // UseEffect to recalculate grid based on {green}
   useEffect(() => {
-    let arr = populateArr(green)
+    let arr = populateArr(ageWeeks-firstWeekDiff)
     setmapArrGreen(arr)
-    
-    let arr2 = populateArr(4160-green)
+    let arr2 = populateArr(firstWeekDiff)
     setmapArr(arr2)
+    let arr3 = populateArr(4160-ageWeeks)
+    setmapArr(arr3)
 
     return () => {
       arr = null
       arr2 = null
+      arr3 = null
     }
-  }, [green])
+  }, [ageWeeks, firstWeekDiff])
 
-  const onClickGreen = () => {
-    alert("Hi")
+  const navigate = useNavigate();
+  const params = useParams()
+
+  const onClickGreen = ( i ) => {
+    const weekNo = ageWeeks - firstWeekDiff + i + 1
+    navigate(`/week/${weekNo}`)
   }
 
   return (
@@ -42,7 +54,13 @@ const Grid = ({ green }) => {
           return <li 
             className="green" 
             key={i}
-            onClick={onClickGreen}/>
+            />
+        })}
+        {mapArrGreenClick.map(i => {
+          return <li 
+            className="green click" 
+            key={i}
+            onClick={() => onClickGreen(i)}/>
         })}
         {mapArr.map(i => {
           return <li key={i}></li>
