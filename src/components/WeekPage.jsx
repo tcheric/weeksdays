@@ -250,11 +250,13 @@ const WeekPage = ({}) => {
     const gi = getGoalIndex(goalName, weeklyData)
     let strData = weeklyData[gi].weeks[params.weekNum]
 
+    console.log(strData)
+
     // If that week has no data, do not show the goal at all
     if (strData === undefined) return -1
 
     let arrData = strData.split('')
-    console.log(arrData)
+    // console.log(arrData)
     return arrData
   }
 
@@ -300,7 +302,7 @@ const WeekPage = ({}) => {
         </div>
         <div className="goal-ctnr">
           {goals.map(i => {
-            return (getGoalDataArr !== -1) && <Goal
+            (getGoalDataArr !== -1) && <Goal
               name={i.goalName}
               key={crypto.randomUUID()}
               goalData={getGoalDataArr(i.goalName)}
