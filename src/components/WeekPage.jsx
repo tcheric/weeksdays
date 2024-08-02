@@ -27,13 +27,15 @@ const WeekPage = ({}) => {
     }
   }, [showInput]);
 
+  const cancelWInput = () => {
+    setSearchedWk("")
+    setWeekNoEdit(false)
+    setInvalid(false)
+  }
+
   useEffect(() => {
     const clickCancel = (e) => {
-      if (e.target.className !== "weekNo" && e.target.id !=="wn-input") {
-        setSearchedWk("")
-        setWeekNoEdit(false)
-        setInvalid(false)
-      }
+      if (e.target.className !== "weekNo" && e.target.id !=="wn-input") cancelWInput()
     }
 
     if (weekNoEdit) {
@@ -203,12 +205,16 @@ const WeekPage = ({}) => {
     if (prevWeeklyData[goalIndex].active == "no") return
 
     newWeeklyData[goalIndex].active = "no"
+    
     // If-else to set final day as green or red
     if (result == "Success") {
       console.log("success")
     } else if (result == "Failure") {
       console.log("Failure")
     }
+
+    // Set rest of days to blank (4)
+
     updateGoalStateAndLS(newWeeklyData)
   }
 
@@ -287,6 +293,7 @@ const WeekPage = ({}) => {
         }}
         onKeyDown={(e) => {
           if (e.code == "Enter") searchWeek()
+          if (e.code == "Escape") cancelWInput()
         }}
         />
       </div>}
@@ -312,8 +319,7 @@ const WeekPage = ({}) => {
             <div className="ag-btn-ctnr">
               {!showInput && <button 
                 className="add-goal-button plus"
-                // onClick={() => {setShowInput(true)}}>
-                onClick={autoUpdateGoals}>
+                onClick={() => {setShowInput(true)}}>
                 +
               </button>}
             </div>
@@ -328,6 +334,7 @@ const WeekPage = ({}) => {
                 onChange={(e) => setNewGoal(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.code == "Enter") addGoal()
+                  if (e.code == "Escape") setShowInput(false)
                 }}
               />
               <button 

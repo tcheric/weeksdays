@@ -358,16 +358,27 @@ li {
   align-items: center;
 }
 
-.dash {
-  margin-inline: 36px;
-  font-size: 26px;
+.dash-dot {
   cursor: pointer;
 }
 
-.dot {
+.success {
+  color: green;
+}
+
+.failure {
+  color: red;
+  font-weight: bold;
+}
+
+.blank {
+  width: 26px;
+  height: 26px;
+}
+
+.dl-elem {
   margin-inline: 36px;
   font-size: 26px;
-  cursor: pointer;
 }
 
 .left-button {
