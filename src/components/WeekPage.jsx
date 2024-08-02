@@ -201,21 +201,28 @@ const WeekPage = ({}) => {
     let newWeeklyData = prevWeeklyData
     const goalIndex = getGoalIndex(goalName, prevWeeklyData)
 
-    // Catch case if user attempts to finish inactive task - do nothing 
-    if (prevWeeklyData[goalIndex].active == "no") return
-
-    newWeeklyData[goalIndex].active = "no"
+    newWeeklyData[goalIndex].active = "no"    
     
-    // If-else to set final day as green or red
+    // Get curr day
+    const dayIndex = ((new Date()).getDay() + 6 ) % 7 // getDay() start at Sunday :|
+    const remainingDays = 7 - dayIndex
+    const week = params.weekNum
+    
+    let dataStr = "".concat(prevWeeklyData[goalIndex].weeks[week].substring(0, dayIndex-1))
+    // Set final day as green(2) or red(3)
     if (result == "Success") {
-      console.log("success")
-    } else if (result == "Failure") {
-      console.log("Failure")
+      let dataStr2 = dataStr.concat("2")
+      // Set rest of days to blank(4)
+      let dataStr3 = dataStr2.concat("4".repeat(remainingDays))
+      newWeeklyData[goalIndex].weeks[week] = dataStr3
+      updateGoalStateAndLS(newWeeklyData)
+    } else {
+      let dataStr2 = dataStr.concat("3")
+      // Set rest of days to blank(4)
+      let dataStr3 = dataStr2.concat("4".repeat(remainingDays))
+      newWeeklyData[goalIndex].weeks[week] = dataStr3
+      updateGoalStateAndLS(newWeeklyData)
     }
-
-    // Set rest of days to blank (4)
-
-    updateGoalStateAndLS(newWeeklyData)
   }
 
   const renameGoal = ( newGoalName, oldGoalName ) => {

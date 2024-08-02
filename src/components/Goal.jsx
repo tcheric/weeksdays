@@ -6,9 +6,8 @@ import GoalModal from "./GoalModal"
 
 const Goal = ({ name, goalData, finishGoal, clearGoal, renameGoal, toggleGoalData }) => {
   // 0 = dash, 1 = dot, 2 = success, 3 = fail, 4 = blank
-  // const [dotArr, setDotArr] = useState([0,0,0,0,0,0,0])
   const [dotArr, setDotArr] = useState(() => {
-    return goalData
+    return goalData // [0,0,0,0,0,0,0]
   })
   
   const [showModal, setShowModal] = useState(false)
@@ -26,6 +25,20 @@ const Goal = ({ name, goalData, finishGoal, clearGoal, renameGoal, toggleGoalDat
     setDotArr(newDotArr)
     const dotArrString = newDotArr.join("")
     toggleGoalData(dotArrString, name)
+  }
+
+  const finishGoalInter = (name, status) => {
+    const goalData = JSON.parse(localStorage.getItem("goals"))
+    let goalIndex = -1
+    for (let obj of goalData) {
+      if (obj.goalName == name) goalIndex = goalData.indexOf(obj)
+    }
+    if (goalData[goalIndex].active === "no") {
+      setShowModal(false)
+      return
+    } else {
+      finishGoal(name, status)
+    }
   }
 
   return (
@@ -73,7 +86,7 @@ const Goal = ({ name, goalData, finishGoal, clearGoal, renameGoal, toggleGoalDat
       name={name}
       open={showModal}
       onClose={()=>{setShowModal(!showModal)}}
-      finishGoal={finishGoal}
+      finishGoal={finishGoalInter}
       clearGoal={clearGoal}
       renameGoal={renameGoal}
     />
