@@ -29,8 +29,16 @@ function App() {
 
   // Helper func for below
   const calcAgeWks = ( year, month, date ) => {
+    // Round dobobj to monday of that week
     let dobObj = new Date(Number(year), Number(month-1), Number(date))
-    return Math.round((new Date() - dobObj) / (7 * 24 * 60 * 60 * 1000));
+    // console.log(dobObj)
+    let dayOfBirth = dobObj.getDay() || 7
+    if (dayOfBirth !== 1) {
+      dobObj.setHours(-24 * (dayOfBirth - 1))
+    }
+    // console.log(dobObj)
+    // console.log((new Date() - dobObj) / (7 * 24 * 60 * 60 * 1000))
+    return Math.floor((new Date() - dobObj) / (7 * 24 * 60 * 60 * 1000));
   }
 
   // UseEffect
