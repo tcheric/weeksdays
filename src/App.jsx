@@ -3,6 +3,8 @@ import './css/App.css'
 import Grid from "./components/Grid"
 import Modal from "./components/Modal"
 import { useNavigate } from "react-router-dom";
+import { GoCalendar } from "react-icons/go";
+import { BsChevronCompactRight } from "react-icons/bs";
 
 function App() {
   // Hardcoded data
@@ -36,8 +38,6 @@ function App() {
     if (dayOfBirth !== 1) {
       dobObj.setHours(-24 * (dayOfBirth - 1))
     }
-    // console.log(dobObj)
-    // console.log((new Date() - dobObj) / (7 * 24 * 60 * 60 * 1000))
     return Math.floor((new Date() - dobObj) / (7 * 24 * 60 * 60 * 1000));
   }
 
@@ -102,13 +102,13 @@ function App() {
       <button 
         className="top-left-button" 
         onClick={()=>{setShowModal(!showModal)}}>
-        Input
+        {/* Input */}
+        <GoCalendar/>
       </button>
-      <button 
-        className="right-button"
+      <BsChevronCompactRight 
+        className="right-button chev"
         onClick={() => {navigate(`/week/${ageWks}`)}}>
-        Days
-      </button>
+      </BsChevronCompactRight>
       <Modal
         open={showModal}
         onClose={()=>{setShowModal(!showModal)}}

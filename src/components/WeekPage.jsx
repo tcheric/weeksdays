@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
 import { GoCheck } from "react-icons/go";
+import { BsChevronCompactLeft } from "react-icons/bs";
 import Goal from "./Goal"
 
 const WeekPage = ({}) => {
@@ -359,11 +360,10 @@ const WeekPage = ({}) => {
         </div>
       </div>
     </div>
-    <button 
-      className="left-button"
+    <BsChevronCompactLeft 
+      className="left-button chev"
       onClick={() => {navigate(`/`)}}>
-      Weeks
-    </button>
+    </BsChevronCompactLeft>
   </>
   )
 }
