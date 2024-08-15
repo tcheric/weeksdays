@@ -23,6 +23,10 @@ const WeekPage = ({}) => {
   
   // UseEffects
   useEffect(() => {
+    if (localStorage.getItem("dob") === null) navigate("/")
+  }, [])
+
+  useEffect(() => {
     if (showInput) {
       document.getElementById("ag-input").focus()
     }

@@ -132,7 +132,10 @@ function App() {
       <BsChevronCompactRight 
         id="rchev"
         className="right-button chev"
-        onClick={() => {navigate(`/week/${ageWks}`)}}>
+        onClick={() => {
+          if (dob === null) setShowModal(true)
+          else navigate(`/week/${ageWks}`)
+        }}>
       </BsChevronCompactRight>
       <Modal
         open={showModal}
