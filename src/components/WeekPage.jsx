@@ -270,6 +270,29 @@ const WeekPage = ({}) => {
     return arrData
   }
 
+  // UseEffect mousemove listener to fade chev ---
+  var timeoutid = 0; 
+
+  const showChevAndFade = (e) => {
+    lchev.classList.remove("lchev-fade")
+    if (timeoutid) {
+      clearTimeout(timeoutid);
+      timeoutid = 0;
+    }
+    timeoutid = setTimeout(() => {
+      if (e.target.id !== "lchev") lchev.classList.add("lchev-fade")
+    }, 2500);
+  }
+
+  useEffect(() => {
+    var lchev = document.getElementById("lchev")
+    window.addEventListener('mousemove', showChevAndFade)
+    return () => {
+      window.removeEventListener('mousemove', showChevAndFade);
+    }
+  }, []);
+  // end ---
+
   return (
   <>
     <div className="wk-ctnr">
@@ -361,6 +384,7 @@ const WeekPage = ({}) => {
       </div>
     </div>
     <BsChevronCompactLeft 
+      id="lchev"
       className="left-button chev"
       onClick={() => {navigate(`/`)}}>
     </BsChevronCompactLeft>

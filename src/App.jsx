@@ -14,6 +14,30 @@ function App() {
   // UseState
   const [showModal, setShowModal] = useState(false)
 
+
+  // UseEffect mousemove listener to fade chev ---
+  var timeoutid = 0; 
+
+  const showChevAndFade = (e) => {
+    rchev.classList.remove("rchev-fade")
+    if (timeoutid) {
+      clearTimeout(timeoutid);
+      timeoutid = 0;
+    }
+    timeoutid = setTimeout(() => {
+      if (e.target.id !== "rchev") rchev.classList.add("rchev-fade")
+    }, 2500);
+  }
+
+  useEffect(() => {
+    var rchev = document.getElementById("rchev")
+    window.addEventListener('mousemove', showChevAndFade)
+    return () => {
+      window.removeEventListener('mousemove', showChevAndFade);
+    }
+  }, []);
+  // end ---
+
   const [dob, setDob] = useState(() => {
     const dobLS = localStorage.getItem("dob")
     return (dobLS === null) ? null : dobLS // this is a string
@@ -41,7 +65,7 @@ function App() {
     return Math.floor((new Date() - dobObj) / (7 * 24 * 60 * 60 * 1000));
   }
 
-  // UseEffect
+  // UseEffect calc age
   useEffect(() => {
     if (dob) {
       // Re-calc age and update ageWks usestate and LS
@@ -106,6 +130,7 @@ function App() {
         <GoCalendar/>
       </button>
       <BsChevronCompactRight 
+        id="rchev"
         className="right-button chev"
         onClick={() => {navigate(`/week/${ageWks}`)}}>
       </BsChevronCompactRight>
