@@ -281,7 +281,7 @@ const WeekPage = ({}) => {
     }
     timeoutid = setTimeout(() => {
       if (e.target.id !== "lchev") lchev.classList.add("lchev-fade")
-    }, 2500);
+    }, 2200);
   }
 
   useEffect(() => {

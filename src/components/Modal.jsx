@@ -10,6 +10,10 @@ const Modal = ({ onAdd, open, onClose }) => {
   const [year, setyear] = useState("")
   const [invalid, setInvalid] = useState(false)
   const [submitInvalid, setSubmitInvalid] = useState(false)
+  const [dobExists, setDobExists] = useState(() => {
+    let dobLS = localStorage.getItem("dob")
+    return (dobLS === null) ? false : true
+  })
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -42,7 +46,9 @@ const Modal = ({ onAdd, open, onClose }) => {
             onSubmit={onSubmit}
             autoComplete="off"
           >
-            <label className="label">Enter your birth date:</label>
+            <label className="label">
+              {dobExists ? "Clear existing goal data and reset DOB:" : "Enter your birth date:"}
+            </label>
             <div className="input-container">
               <input 
                 className={`input ${invalid ? 'invalid': ''}`}
@@ -105,7 +111,7 @@ const Modal = ({ onAdd, open, onClose }) => {
                 }}
               />
             </div>
-            <button className={`enter ${submitInvalid ? 'sub-invalid': ''}`}>Enter</button>
+            <button className={`enter txt-btn ${submitInvalid ? 'sub-invalid': ''}`}>Enter</button>
           </form>
         </div>
       </div>

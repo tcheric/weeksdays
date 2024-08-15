@@ -26,7 +26,7 @@ function App() {
     }
     timeoutid = setTimeout(() => {
       if (e.target.id !== "rchev") rchev.classList.add("rchev-fade")
-    }, 2500);
+    }, 2200);
   }
 
   useEffect(() => {

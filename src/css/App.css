@@ -217,6 +217,7 @@ li {
   text-align: center;
   width: 100%;
   margin-bottom: 16px;
+  color: rgb(49, 49, 49)
 }
 
 .input-container {
@@ -252,6 +253,8 @@ li {
 
 .dob-form .enter{
   margin-top: 16px;
+  padding-inline: 12px;
+  padding-block: 4px;
 }
 
 .sub-invalid {
@@ -561,6 +564,19 @@ li {
   margin-block: 8px;
   width: 116px;
   height: 26px;
+}
+
+.txt-btn {
+  border: 1px solid rgb(160, 160, 160);
+  border-radius: 1px;
+  background-color: rgb(252, 252, 252);
+  cursor: pointer;
+  color: rgb(65, 65, 65);
+}
+
+.txt-btn:hover {
+  border-color: rgb(120, 120, 120);
+  background-color: rgb(242, 242, 242);
 }
 
 .gm-btn-ctnr span {

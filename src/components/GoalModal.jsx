@@ -27,28 +27,28 @@ const GoalModal = ({ name, open, onClose, finishGoal, clearGoal, renameGoal }) =
             <div className="goal-info">{name}</div>
 
             {(whichBC == 1) && <div className="gm-btn-ctnr">
-              <button className="gm-btn" onClick={()=>setWhichBC(2)}>
+              <button className="gm-btn txt-btn" onClick={()=>setWhichBC(2)}>
                 Finish goal</button>
-              <button className="gm-btn" onClick={()=>setWhichBC(4)}>
+              <button className="gm-btn txt-btn" onClick={()=>setWhichBC(4)}>
                 Rename goal</button>
-              <button className="gm-btn" onClick={()=>setWhichBC(3)}>
+              <button className="gm-btn txt-btn" onClick={()=>setWhichBC(3)}>
                 Clear goal data</button>
             </div>}
 
             {(whichBC == 2) && <div className="gm-btn-ctnr">
-              <button className="gm-btn" onClick={()=>finishGoal(name, "Success")}>
+              <button className="gm-btn txt-btn" onClick={()=>finishGoal(name, "Success")}>
                 Success</button>
-              <button className="gm-btn" onClick={()=>finishGoal(name, "Failure")}>
+              <button className="gm-btn txt-btn" onClick={()=>finishGoal(name, "Failure")}>
                 Failure</button>
-              <button className="gm-btn" onClick={()=>setWhichBC(1)}>
+              <button className="gm-btn txt-btn" onClick={()=>setWhichBC(1)}>
                 Cancel</button>
             </div>}
 
             {(whichBC == 3) && <div className="gm-btn-ctnr">
               <span>Are you sure?</span>
-              <button className="gm-btn" onClick={()=>clearGoal(name)}>
+              <button className="gm-btn txt-btn" onClick={()=>clearGoal(name)}>
                 Yes</button>
-              <button className="gm-btn" onClick={()=>setWhichBC(1)}>
+              <button className="gm-btn txt-btn" onClick={()=>setWhichBC(1)}>
                 No</button>
             </div>}
 
