@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const Grid = ({ ageWeeks, firstWeekDiff }) => {
 
   const populateArr = (lenArr) => {
+    if (lenArr == -1 || lenArr == 0 || lenArr == 1) return []
     let arr =  new Array(lenArr)
     for (let i = 0; i < arr.length; i++) {
       arr[i] = i
