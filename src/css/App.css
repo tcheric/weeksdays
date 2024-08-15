@@ -93,12 +93,12 @@ li {
   position: fixed;
   top: 20px;
   left: 20px;
-  font-size: 20px;
-  height: 32px;
-  width: 32px;
-  border: 1px solid rgb(200, 200, 200);
+  font-size: 21px;
+  height: 35px;
+  width: 35px;
+  border: 1px solid rgb(190, 190, 190);
   background-color: white;
-  color: rgb(190, 190, 190);
+  color: rgb(180, 180, 180);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -108,12 +108,12 @@ li {
 
 .top-left-button:hover {
   border: 1px solid rgb(180, 180, 180);
-  color: rgb(180, 180, 180);
+  color: rgb(170, 170, 170);
 }
 
 .top-left-button:active {
-  background-color: rgb(230, 230, 230);
-  border-color:rgb(230, 230, 230);
+  background-color: rgb(220, 220, 220);
+  border-color:rgb(210, 210, 210);
   color: white;
 }
 
@@ -327,10 +327,10 @@ li {
 .day-axis {
   height: 30px;
   /* background-color: rgb(244, 244, 244); */
-  border-bottom: 1px solid rgb(236, 236, 236);
+  /* border-bottom: 1px solid rgb(236, 236, 236); */
   padding-bottom: 22px;
   margin-left: 18%;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
   margin-right: 2%;
   width: 80%;
   display: flex;
@@ -340,7 +340,9 @@ li {
 
 .goal-ctnr {
   /* background-color: rgb(0, 132, 255); */
+  border-top: 1px solid rgb(230, 230, 230);
   height: 100%;
+  padding-top: 12px;
 }
 
 .day-axis span  {
