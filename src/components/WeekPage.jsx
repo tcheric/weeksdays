@@ -255,7 +255,7 @@ const WeekPage = ({}) => {
     let sw = Number(searchedWk)
     let fw = Number(localStorage.getItem("firstWeek"))
     let age = Number(localStorage.getItem("age"))
-    if (sw < fw || sw > age) {
+    if (sw < fw || sw > age || fw === 0) {
       setInvalid(true)
     } else {
       navigate(`/week/${sw}`)
