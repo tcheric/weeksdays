@@ -95,6 +95,7 @@ const WeekPage = ({}) => {
       case "ArrowUp":
         let firstWk = Number(localStorage.getItem("firstWeek"))
         let prevWk = Number(params.weekNum) - 1
+        if (firstWk === 0) return
         if (prevWk >= firstWk) navigate(`/week/${prevWk}`)
         break;
       case "ArrowDown":
@@ -115,6 +116,8 @@ const WeekPage = ({}) => {
     // Loop through every goal
     const prevWeeklyData = getWeeklyData()
     let newWeeklyData = prevWeeklyData
+
+    if (prevWeeklyData === null) return
 
     // If goal is active (not "Finished"), fill in missing weeks
     for (const goal of prevWeeklyData) {
