@@ -120,7 +120,7 @@ function App() {
               return <span key={i}>{i}</span>
             })}
           </div>
-          <Grid ageWeeks={ageWks} firstWeekDiff={firstWkDiff + 1}/>
+          <Grid ageWeeks={ageWks} firstWeekDiff={firstWkDiff}/>
         </div>
       </div>
       <button 

@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 const Grid = ({ ageWeeks, firstWeekDiff }) => {
 
   const populateArr = (lenArr) => {
-    if (lenArr == -1 || lenArr == 0 || lenArr == 1) return []
     let arr =  new Array(lenArr)
     for (let i = 0; i < arr.length; i++) {
       arr[i] = i
@@ -13,11 +12,15 @@ const Grid = ({ ageWeeks, firstWeekDiff }) => {
   }
 
   const [mapArrGreen, setmapArrGreen] = useState(()=>{
-    return populateArr(ageWeeks-firstWeekDiff)
+    console.log("firstWeekDiff", firstWeekDiff)
+    console.log("ageWeeks", ageWeeks)
+    if (firstWeekDiff !== 0) return populateArr(ageWeeks-firstWeekDiff-1)
+    else return populateArr(ageWeeks-firstWeekDiff)
   })
 
   const [mapArrGreenClick, setmapArrGreenClick] = useState(()=>{
-    return populateArr(firstWeekDiff)
+    if (firstWeekDiff !== 0) return populateArr(firstWeekDiff+1)
+    else return []
   })
 
   const [mapArr, setmapArr] = useState(()=>{
